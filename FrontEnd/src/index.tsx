@@ -10,9 +10,7 @@ import {Container} from "react-bootstrap";
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
-          <Container>
-              <App />
-          </Container>
+          <App />
       </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
