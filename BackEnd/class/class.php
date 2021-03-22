@@ -88,7 +88,6 @@
             }
             $sql = 'SELECT ' . $select_sql . ' FROM ' . $tablename . ' ' . $filter_sql . ' ' . $order_sql . ' ' . $limit_sql;
 
-            // return $sql;
             if($result = $this->conn->query($sql)){
                 return $result->fetch_all(MYSQLI_ASSOC);
             }else{
@@ -117,7 +116,6 @@
                 }
                 $sql = 'SELECT ' . $select_sql . ' FROM ' . $tablename . ' WHERE ID=' . $id;
 
-                // return $sql;
                 if($result = $this->conn->query($sql)){
                     $result = $result->fetch_all(MYSQLI_ASSOC);
                     return $result[0];
@@ -177,7 +175,6 @@
             }
             $sql = 'SELECT ID FROM ' . $tablename . ' ' . $filter_sql;
 
-            // return $sql;
             if($result = $this->conn->query($sql)){
                 $result = $result->fetch_all(MYSQLI_ASSOC);
                 return $result[0]['ID'];
@@ -204,7 +201,6 @@
 
                 $sql = 'UPDATE ' . $tablename . ' SET ' . $sql . ' WHERE ID=' . $id;
 
-                // return $sql;
                 if($result = $this->conn->query($sql)){
                     return 'success';
                 }else{
@@ -240,11 +236,9 @@
 
             $sql = 'INSERT INTO ' . $tablename . ' (' . $keys_sql . ') VALUES (' . $values_sql . ')';
 
-            // return $sql;
             if($result = $this->conn->query($sql)){
                 return 'success';
             }else{
-                return 'no';
                 return $result->error;
             }
         }else{
