@@ -4,6 +4,7 @@ import Footer from "../../Footer/Footer";
 import {menuTabs} from "../../Constants";
 import NewsList from "./components/NewsList";
 import EventsPage from "./components/EventsPage";
+import {Container} from "react-bootstrap";
 
 export interface mainProfileContainerInterface {
     currentTab: number

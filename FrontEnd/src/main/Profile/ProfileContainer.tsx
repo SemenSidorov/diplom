@@ -26,11 +26,10 @@ const ProfileContainer = () => {
     }, [currentTab]);
 
     return (
-        <Col md={12}>
+        <div>
             <Header title={getHeaderNameByCurrentTab} isAuth/>
             <MainProfileContainer currentTab={Number(currentTab)}/>
-        </Col>
-
+        </div>
     );
 };
 
