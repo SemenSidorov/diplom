@@ -1,0 +1,10 @@
+<?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
+$db = new DB;
+$count_news = 10;
+$top_news = 0;
+$pagen = (int)$_GET["PAGEN"];
+
+if($pagen) $top_news = $count_news * ($pagen - 1);
+$result = $db->GetList('news', [], ['NAME', 'PREVIEW_PICTURE', 'PREVIEW_TEXT'], [], $top_news, $count_news);
+$count = $db->Count('news');
+echo json_encode(["values" => $result, "count_news_all" => $count, "this_page" => ($pagen ? $pagen : 1)]);

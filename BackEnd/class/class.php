@@ -10,11 +10,8 @@ class DB {
       $this->conn = new mysqli($this->host, $this->login, $this->password, $this->dbname);
     }
 
-    public function GetList($tablename = '', $filter=[], $select = [], $order=[], $top=0, $limit=0) {
-        if(!$tablename) return 'ERROR: Название таблицы не определено!';
-
-        $sql = $filter_sql = '';
-
+    private function Filter($filter=[]) {
+        $filter_sql = '';
         if($filter){
             foreach($filter as $key => $val){
                 if(is_array($val)){
@@ -29,40 +26,54 @@ class DB {
 					$filter_sql .= ($filter_sql? ' AND ' : '') . '"' . $key . '"' . $operator . '"' . $val . '"';
                 }
             }
-            $filter_sql = 'WHERE ' . $filter_sql;
+            return 'WHERE ' . $filter_sql;
         }
+        return '';
 
-		$select_sql = '*';
-		if(is_array($select)){
+    }
+
+    private function Select($select=[]) {
+		if($select){
             $select_sql = '';
             foreach($select as $val){
-				$select_sql .= ($select_sql? ', ' : '') . '"' . $val . '"';
+				$select_sql .= ($select_sql ? ', ' : '') . "`" . $val . "`";
             }
+            return $select_sql;
         }
-		
+        return '*';
+    }
+
+    private function Order($order=[]) {
 		$order_sql = '';
-		
         if($order){
             foreach($order as $key => $val){
                 if(in_array(strtoupper(trim($val)), ["ASC","DESC","RAND"])) $order_sql .= ($order_sql? ', ' : '') . '"' . $key . '"' . ' ' . '"' . $val . '"';
             }
-            $order_sql = 'ORDER BY ' . $order_sql;
+            return 'ORDER BY ' . $order_sql;
         }
-		$limit_sql = '';
-		
-		if($limit){
-            $limit_sql = 'LIMIT ' . ((int)$top ? (int)$top . ', ' : '') . (int)$limit;
-        }
-        $sql = 'SELECT ' . $select_sql . ' FROM "' . $tablename . '" ' . $filter_sql . ' ' . $order_sql . ' ' . $limit_sql;
+        return '';
+    }
 
-        if($result = $this->conn->prepare($sql)){ 
-            if($result = $result->execute()){ 
-                return $result->fetch_all(MYSQLI_ASSOC);
-            }else{ 
-                return $this->conn->error; 
-            }
-        }else{
-            return $this->conn->error;
+    private function Limit($top=0, $limit=10) {
+		if((int)$limit > 0) return 'LIMIT ' . ((int)$top ? (int)$top . ', ' : '') . (int)$limit;
+        else return 'LIMIT 10';
+    }
+
+    public function GetList($tablename = '', $filter=[], $select = [], $order=[], $top=0, $limit=10) {
+        if(!$tablename) return 'ERROR: Название таблицы не определено!';
+
+        $sql = '';
+        $filter_sql = $this->Filter($filter);
+		$select_sql = $this->Select($select);
+		$order_sql = $this->Order($order);
+		$limit_sql = $this->Limit($top, $limit);
+
+        $sql = 'SELECT ' . $select_sql . " FROM `" . $tablename . "` " . $filter_sql . ' ' . $order_sql . ' ' . $limit_sql;
+
+        if($result = $this->conn->query($sql)){ 
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }else{ 
+            return $this->conn->error; 
         }
     }
 
@@ -71,59 +82,31 @@ class DB {
 		if(!(int)$id) return 'ERROR: ID не определено!';
 		
         $sql = '';
-		$select_sql = '*';
-        if($select){
-            $select_sql = '';
-            foreach($select as $val){
-				$select_sql .= ($select_sql? ', ' : '') . '"' . $val . '"';
-            }
-        }
-        $sql = 'SELECT ' . $select_sql . ' FROM "' . $tablename . '" WHERE ID=' . (int)$id;
+		$select_sql = $this->Select($select);
 
-        if($result = $this->conn->prepare($sql)){ 
-            if($result = $result->execute()){ 
-                $result = $result->fetch_all(MYSQLI_ASSOC);
-                return $result[0];
-            }else{ 
-                return $this->conn->error; 
-            }
-        }else{
-            return $this->conn->error;
+        $sql = 'SELECT ' . $select_sql . " FROM `" . $tablename . "` WHERE ID=" . (int)$id;
+
+        if($result = $this->conn->query($sql)){ 
+            $result = $result->fetch_all(MYSQLI_ASSOC);
+            return $result[0];
+        }else{ 
+            return $this->conn->error; 
         }
     }
 
     public function GetId($tablename = '', $filter = []) {
         if(!$tablename) return 'ERROR: Название таблицы не определено!';
 
-        $sql = $filter_sql = '';
+        $sql = '';
+        $filter_sql = $this->Filter($filter);
 
-        if($filter){
-            foreach($filter as $key => $val){
-                if(is_array($val)){
-					$filter_sql .= ($filter_sql? ' AND ' : ''). '"' . $key . '"' . ' IN ("' . implode('","', $val) . '")';
-                }else{
-					if(preg_match('/([^a-zA-Z0-9_\\s][^a-zA-Z0-9_\\s])|[^a-zA-Z0-9_\\s]/mi', $key, $matches)){
-						$operator = $matches[0]=="!"? "<>" : $matches[0];
-                        $key = str_replace($operator, '', $key);
-					}else{
-                        $operator = '=';
-                    }
-					$filter_sql .= ($filter_sql? ' AND ' : '') . '"' . $key . '"' . $operator . '"' . $val . '"';
-                }
-            }
-            $filter_sql = 'WHERE ' . $filter_sql;
-        }
-        $sql = 'SELECT ID FROM "' . $tablename . '" ' . $filter_sql;
+        $sql = "SELECT ID FROM `" . $tablename . "` " . $filter_sql;
 
-        if($result = $this->conn->prepare($sql)){ 
-            if($result = $result->execute()){ 
-                $result = $result->fetch_all(MYSQLI_ASSOC);
-                return $result[0]['ID'];
-            }else{ 
-                return $this->conn->error; 
-            }
-        }else{
-            return $this->conn->error;
+        if($result = $this->conn->query($sql)){ 
+            $result = $result->fetch_all(MYSQLI_ASSOC);
+            return $result[0]['ID'];
+        }else{ 
+            return $this->conn->error; 
         }
     }
 
@@ -136,16 +119,12 @@ class DB {
 			$sql .= ($sql? ', ' : '') . '"' . $key . '"' . '="' . $field . '"';
         }
 
-        $sql = 'UPDATE "' . $tablename . '" SET ' . $sql . ' WHERE ID=' . (int)$id;
+        $sql = "UPDATE `" . $tablename . "` SET " . $sql . ' WHERE ID=' . (int)$id;
 
-        if($result = $this->conn->prepare($sql)){ 
-            if($result = $result->execute()){ 
-                return 'success'; 
-            }else{ 
-                return $this->conn->error; 
-            }
-        }else{
-            return $this->conn->error;
+        if($result = $this->conn->query($sql)){ 
+            return 'success'; 
+        }else{ 
+            return $this->conn->error; 
         }
     }
 
@@ -160,16 +139,12 @@ class DB {
 			
         }
 
-        $sql = 'INSERT INTO "' . $tablename . '" (' . $keys_sql . ') VALUES (' . $values_sql . ')';
+        $sql = "INSERT INTO `" . $tablename . "` (" . $keys_sql . ') VALUES (' . $values_sql . ')';
 
-        if($result = $this->conn->prepare($sql)){ 
-            if($result = $result->execute()){ 
-                return $this->conn->insert_id; 
-            }else{ 
-                return $this->conn->error; 
-            }
-        }else{
-            return $this->conn->error;
+        if($result = $this->conn->query($sql)){ 
+            return $this->conn->insert_id; 
+        }else{ 
+            return $this->conn->error; 
         }
     }
 
@@ -179,20 +154,30 @@ class DB {
         if(!(int)$id) return 'ERROR: ID не определено!';
         
         $sql = '';
+        if(is_array($id)) $sql .= '"' . $key . '"' . ' IN ("' . implode('","', $id) . '")';
 
-        if(is_array($id)){
-            $sql .= '"' . $key . '"' . ' IN ("' . implode('","', $id) . '")';
-        }
-		$sql = 'DELETE FROM "' . $tablename . '" WHERE "' . $tablename . '".ID' . (is_array($id)? $sql : '='.(int)$id);
+		$sql = "DELETE FROM `" . $tablename . "` WHERE `" . $tablename . "`.ID" . (is_array($id)? $sql : '='.(int)$id);
 		
-        if($result = $this->conn->prepare($sql)){ 
-            if($result = $result->execute()){ 
-                return 'success'; 
-            }else{ 
-                return $this->conn->error; 
-            }
-        }else{
-            return $this->conn->error;
+        if($result = $this->conn->query($sql)){ 
+            return 'success'; 
+        }else{ 
+            return $this->conn->error; 
+        }
+    }
+
+    public function Count($tablename = '', $filter = []) {
+        if(!$tablename) return 'ERROR: Название таблицы не определено!';
+
+        $sql = '';
+        $filter_sql = $this->Filter($filter);
+
+        $sql = "SELECT COUNT(*) FROM `" . $tablename . "` " . $filter_sql;
+
+        if($result = $this->conn->query($sql)){ 
+            $result = $result->fetch_all(MYSQLI_ASSOC);
+            return $result[0]["COUNT(*)"];
+        }else{ 
+            return $this->conn->error; 
         }
     }
 }
