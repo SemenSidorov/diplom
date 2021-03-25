@@ -5,6 +5,6 @@ $top_news = 0;
 $pagen = (int)$_GET["PAGEN"];
 
 if($pagen) $top_news = $count_news * ($pagen - 1);
-$result = $db->GetList('news', [], ['NAME', 'PREVIEW_PICTURE', 'PREVIEW_TEXT'], [], $top_news, $count_news);
-$count = $db->Count('news');
+$result = $db->GetList('elements', ["IBLOCK_ID" => 1], ['NAME', 'PREVIEW_PICTURE', 'PREVIEW_TEXT'], [], $top_news, $count_news);
+$count = $db->Count('elements', ["IBLOCK_ID" => 1]);
 echo json_encode(["values" => $result, "count_news_all" => $count, "this_page" => ($pagen ? $pagen : 1)]);

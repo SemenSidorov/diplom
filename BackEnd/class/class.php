@@ -15,7 +15,7 @@ class DB {
         if($filter){
             foreach($filter as $key => $val){
                 if(is_array($val)){
-					$filter_sql .= ($filter_sql? ' AND ' : ''). '"' . $key . '"' . ' IN ("' . implode('","', $val) . '")';
+					$filter_sql .= ($filter_sql? ' AND ' : ''). '`' . $key . '`' . ' IN ("' . implode('","', $val) . '")';
                 }else{
 					if(preg_match('/([^a-zA-Z0-9_\\s][^a-zA-Z0-9_\\s])|[^a-zA-Z0-9_\\s]/mi', $key, $matches)){
 						$operator = $matches[0]=="!"? "<>" : $matches[0];
@@ -23,7 +23,7 @@ class DB {
 					}else{
                         $operator = '=';
                     }
-					$filter_sql .= ($filter_sql? ' AND ' : '') . '"' . $key . '"' . $operator . '"' . $val . '"';
+					$filter_sql .= ($filter_sql? ' AND ' : '') . '`' . $key . '`' . $operator . '"' . $val . '"';
                 }
             }
             return 'WHERE ' . $filter_sql;
@@ -116,7 +116,7 @@ class DB {
         $sql = '';
 
         foreach($arFields as $key => $field){
-			$sql .= ($sql? ', ' : '') . '"' . $key . '"' . '="' . $field . '"';
+			$sql .= ($sql? ', ' : '') . '`' . $key . '`' . '="' . $field . '"';
         }
 
         $sql = "UPDATE `" . $tablename . "` SET " . $sql . ' WHERE ID=' . (int)$id;
@@ -134,8 +134,8 @@ class DB {
 
         foreach($arFields as $key => $field){
 			if(in_array($key, array('ID','id'))) continue;
-			$keys_sql .= ($keys_sql? ', ' : '') . '"' . $key . '"';
-			$values_sql .= ($values_sql? ', ' : '') . '"' . $field . '"';
+			$keys_sql .= ($keys_sql ? ', ' : '') . '`' . $key . '`';
+			$values_sql .= ($values_sql ? ', ' : '') . '"' . $field . '"';
 			
         }
 
@@ -154,7 +154,7 @@ class DB {
         if(!(int)$id) return 'ERROR: ID не определено!';
         
         $sql = '';
-        if(is_array($id)) $sql .= '"' . $key . '"' . ' IN ("' . implode('","', $id) . '")';
+        if(is_array($id)) $sql .= '`' . $key . '`' . ' IN ("' . implode('","', $id) . '")';
 
 		$sql = "DELETE FROM `" . $tablename . "` WHERE `" . $tablename . "`.ID" . (is_array($id)? $sql : '='.(int)$id);
 		
