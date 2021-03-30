@@ -1,28 +1,35 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Header from "../Header/Header";
 import {Button, Col, Container, Form} from "react-bootstrap";
 
 const Register = () => {
+    const [login, setLogin] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+
+    const register = useCallback(async () => {
+        const result = await fetch(`http://backend/BackEnd/personal/registration.php?LOGIN=${login}&PASSWORD=${password}`);
+        return result.json()
+    }, [login, password]);
+
+
     return (
         <Container fluid style={{padding:'0px'}}>
             <Form className={'main__register-form'}>
                 <Col md={6} xl={2}>
                     <Form.Group className={'input-text'} controlId="formBasicEmail">
-                        <Form.Control type="email" placeholder="Введите никнэйм" />
-                    </Form.Group>
-                </Col>
-                <Col md={6} xl={2}>
-                    <Form.Group className={'input-text'} controlId="formBasicEmail">
-                        <Form.Control type="email" placeholder="Введите email" />
+                        <Form.Control type="email" value={login} onChange={(e) => setLogin(e.target.value) } placeholder="Введите email" />
                     </Form.Group>
                 </Col>
                 <Col md={6} xl={2}>
                     <Form.Group className={'input-text'} controlId="formBasicPassword">
-                        <Form.Control type="password" placeholder="Введите пароль" />
+                        <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Введите пароль" />
                     </Form.Group>
                 </Col>
                 <Col md={3} xs ={8} style={{display:'flex',margin:'auto',justifyContent: 'center'}}>
-                    <Button type="submit" style={{width:'100%', marginTop: '15px'}} variant="success" className={'submit-btn'}>
+                    <Button style={{width:'100%', marginTop: '15px'}}
+                            onClick={register}
+                            variant="success"
+                            className={'submit-btn'}>
                         Зарегистрироваться
                     </Button>
                 </Col>

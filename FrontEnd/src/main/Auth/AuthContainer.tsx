@@ -1,9 +1,8 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import Register from "./Register";
 import Login from "./Login";
 import { useParams } from 'react-router-dom'
 import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
 
 export interface AuthInterFace {
     isRegister?: string
@@ -19,7 +18,7 @@ const AuthContainer = () => {
         }
 
         return <Login/>
-    }, [isRegister])
+    }, [isRegister]);
 
     return (
         <div>
