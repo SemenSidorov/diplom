@@ -122,7 +122,7 @@ class DB {
         $sql = "UPDATE `" . $tablename . "` SET " . $sql . ' WHERE ID=' . (int)$id;
 
         if($result = $this->conn->query($sql)){ 
-            return 'success'; 
+            return $id; 
         }else{ 
             return $this->conn->error; 
         }

@@ -3,7 +3,7 @@ $db = new DB;
 
 $login = $_GET["LOGIN"];
 $check_user = $db->GetList('users', ["LOGIN" => $login], ["ID"]);
-if(is_array($check_user)){
+if($check_user){
     echo json_encode(["ERROR" => "Пользователь с таким логином уже существует"]);
     die;
 }
@@ -12,9 +12,14 @@ if(!$password = password_hash($_GET["PASSWORD"], PASSWORD_DEFAULT)){
     die;
 }
 
-$result = $db->Add('users', ["LOGIN" => $login, "PASSWORD" => $password]);
+$str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQSTUVWXYZ1234567890~!@#$%^&*_-+=";
+$rand_num = rand(0, 63);
+$str = str_shuffle($str);
+$token = substr($str, $rand_num, $rand_num + 11);
+
+$result = $db->Add('users', ["LOGIN" => $login, "PASSWORD" => $password, "LAST_AUTCH" => time(), "TOKEN" => $token]);
 if((int)$result){
-    echo json_encode(["LOGIN" => $login ,"TOKEN" => $password]);
+    echo json_encode(["LOGIN" => $login ,"TOKEN" => $token]);
 }else{
     echo json_encode(["ERROR" => $result]);
 }
