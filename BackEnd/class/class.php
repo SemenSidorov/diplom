@@ -18,7 +18,12 @@ class DB {
 					$filter_sql .= ($filter_sql? ' AND ' : ''). '`' . $key . '`' . ' IN ("' . implode('","', $val) . '")';
                 }else{
 					if(preg_match('/([^a-zA-Z0-9_\\s][^a-zA-Z0-9_\\s])|[^a-zA-Z0-9_\\s]/mi', $key, $matches)){
-						$operator = $matches[0]=="!"? "<>" : $matches[0];
+                        if($matches[0]=="%"){
+                            $operator = "LIKE";
+                            $val = "%" . $val . "%";
+                        }else{
+                            $operator = $matches[0]=="!"? "<>" : $matches[0];
+                        }
                         $key = str_replace($operator, '', $key);
 					}else{
                         $operator = '=';
@@ -59,7 +64,7 @@ class DB {
         else return 'LIMIT 10';
     }
 
-    public function GetList($tablename = '', $filter=[], $select = [], $order=[], $top=0, $limit=10) {
+    public function GetList($tablename = '', $filter=[], $select = [], $order=[], $top=0, $limit=0) {
         if(!$tablename) return 'ERROR: Название таблицы не определено!';
 
         $sql = '';
