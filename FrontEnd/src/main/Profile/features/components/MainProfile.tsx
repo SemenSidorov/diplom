@@ -33,7 +33,7 @@ const MainProfile = ({currentTab}: mainProfileContainerInterface) => {
                 }}>
                     Редактировать страницу
                 </div>
-                <div style={{fontWeight: 600, fontSize: 16, textAlign: 'center', marginTop: 30 }}>
+                <div style={{fontWeight: 600, fontSize: 16, textAlign: 'center', marginTop: 25 }}>
                     Мои мероприятия
                 </div>
                 <EventsPosts />

@@ -123,7 +123,8 @@ const EventsPosts = () => {
         backgroundImage: `url(${Avatar})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-        marginTop: '10px'
+        marginTop: '10px',
+        marginBottom: 50,
     }}>
         Мероприятие
     </div>
@@ -148,6 +149,7 @@ export const DatePickerClickBoxes = styled.div`
     align-self: center;
     color: black;
     font-weight: 500;
+    cursor: pointer;
     height: 100%;
     padding: 6px 18.5px;
     border-right: ${props.isLeft ? ' 1px solid #D9D9D9' : ''} ;
