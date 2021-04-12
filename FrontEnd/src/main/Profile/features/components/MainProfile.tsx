@@ -2,7 +2,7 @@ import React from 'react';
 import {mainProfileContainerInterface} from "../MainProfileContainer";
 import {Col} from "react-bootstrap";
 import Avatar from '../../../../images/first.png';
-import EventsPost from "../../../EventsPost";
+import EventsPosts from "../../../EventsPosts";
 
 const MainProfile = ({currentTab}: mainProfileContainerInterface) => {
 
@@ -33,7 +33,10 @@ const MainProfile = ({currentTab}: mainProfileContainerInterface) => {
                 }}>
                     Редактировать страницу
                 </div>
-                <EventsPost />
+                <div style={{fontWeight: 600, fontSize: 16, textAlign: 'center', marginTop: 30 }}>
+                    Мои мероприятия
+                </div>
+                <EventsPosts />
             </Col>
         </div>
     );

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import {DATE_FILTER_KEYS, DATE_FILTER_VALUES, timeTabs} from "./Constants";
 import useDatePicker from "./useDatePicker";
 
-const EventsPost = () => {
+const EventsPosts = () => {
 
     const [activeDateTab, setActiveDateTab] = useState(DATE_FILTER_KEYS.day);
 
@@ -140,7 +140,7 @@ export const DatePickerContainer = styled.div`
      border: 1px solid #D9D9D9;
      border-radius: 10px; 
      justify-content: space-between;
-     margin-top: 15px;`}
+     margin-top: 10px;`}
 `;
 
 export const DatePickerClickBoxes = styled.div`
@@ -178,6 +178,6 @@ export const SelectButton = styled.div`
 `;
 
 
-export default EventsPost;
+export default EventsPosts;
 
 
