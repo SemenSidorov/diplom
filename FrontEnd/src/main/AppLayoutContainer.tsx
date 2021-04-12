@@ -6,11 +6,14 @@ import {Container} from "react-bootstrap";
 
 
 const AppLayoutContainer = () => {
+
+    const isMobile =  window.screen.width < 1025;
+
     return (
         <Container fluid style={{padding:'0px'}}>
             <Header isAuth={false}/>
             <Preview/>
-            <Footer/>
+            <Footer isMobile={isMobile}/>
         </Container>
     );
 };
