@@ -11,6 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.main__register-form {
+  margin-top: 15%;
+}
 
 .input-text {
   height: 45px;
@@ -26,4 +29,9 @@ code {
 .footer__item {
   display: flex;
   justify-content: center;
+}
+
+a {
+  color: black;
+  text-decoration: none;
 }

@@ -3,7 +3,6 @@ import {useParams} from "react-router-dom";
 import {menuTabs, TabsTypes, UserTypes} from "../Constants";
 import Header from "../Header/Header";
 import MainProfileContainer from "./features/MainProfileContainer";
-import {Col, Container} from "react-bootstrap";
 
 
 
@@ -17,7 +16,7 @@ const ProfileContainer = () => {
             case menuTabs.NEWS:
                 return 'Новости';
             case menuTabs.EVENTS:
-                return 'Мероприятия';
+                return 'Все мероприятия';
             case menuTabs.PROFILE:
                 return `@${userId}`;
             default:

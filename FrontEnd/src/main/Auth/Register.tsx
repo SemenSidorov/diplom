@@ -15,12 +15,13 @@ const Register = () => {
     return (
         <Container fluid style={{padding:'0px'}}>
             <Form className={'main__register-form'}>
-                <Col md={6} xl={2}>
+                <div style={{textAlign: 'center', fontSize: '25px', fontWeight: 400, marginBottom: 10}}>РЕГИСТРАЦИЯ</div>
+                <Col md={6} xl={2} style={{margin: 'auto'}}>
                     <Form.Group className={'input-text'} controlId="formBasicEmail">
                         <Form.Control type="email" value={login} onChange={(e) => setLogin(e.target.value) } placeholder="Введите email" />
                     </Form.Group>
                 </Col>
-                <Col md={6} xl={2}>
+                <Col md={6} xl={2} style={{margin: 'auto'}}>
                     <Form.Group className={'input-text'} controlId="formBasicPassword">
                         <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Введите пароль" />
                     </Form.Group>

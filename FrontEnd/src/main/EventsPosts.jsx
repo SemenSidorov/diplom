@@ -124,7 +124,7 @@ const EventsPosts = () => {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         marginTop: '10px',
-        marginBottom: 50,
+        marginBottom: 60,
     }}>
         Мероприятие
     </div>

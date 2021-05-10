@@ -4,7 +4,8 @@ import Footer from "../../Footer/Footer";
 import {menuTabs} from "../../Constants";
 import NewsList from "./components/NewsList";
 import EventsPage from "./components/EventsPage";
-import {Col, Container} from "react-bootstrap";
+import {Container} from "react-bootstrap";
+import NavPanel from "../../Navigation";
 
 export interface mainProfileContainerInterface {
     currentTab: number
@@ -27,31 +28,11 @@ const MainProfileContainer = ({currentTab}: mainProfileContainerInterface) => {
     const isMobile =  window.screen.width < 1025;
 
     return (
-        <div style={{display: 'flex'}}>
-            {
-                window.screen.width > 1025 && <Col md={2}>
-                    <div>
-                        <div>
-                            Моя страница
-                        </div>
-                        <div>
-                            Новости
-                        </div>
-                        <div>
-                            Сообщения
-                        </div>
-                        <div>
-                            Меропрития
-                        </div>
-                        <div>
-                            Настройки
-                        </div>
-                    </div>
-                </Col>
-            }
+        <Container style={{display: 'flex', justifyContent: 'center'}}>
+            <NavPanel />
             {currentMainComponent}
             <Footer isMobile={isMobile}/>
-        </div>
+        </Container>
     );
 };
 
