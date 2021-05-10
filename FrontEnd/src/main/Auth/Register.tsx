@@ -1,5 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import Header from "../Header/Header";
+import React, {useCallback, useState} from 'react';
 import {Button, Col, Container, Form} from "react-bootstrap";
 
 const Register = () => {

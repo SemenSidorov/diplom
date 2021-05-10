@@ -19,6 +19,8 @@ const ProfileContainer = () => {
                 return 'Все мероприятия';
             case menuTabs.PROFILE:
                 return `@${userId}`;
+            case menuTabs.EDIT:
+                return 'Редактирование профиля'
             default:
                 return 'Новости'
         }

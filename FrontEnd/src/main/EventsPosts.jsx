@@ -4,10 +4,16 @@ import styled from 'styled-components'
 
 import {DATE_FILTER_KEYS, DATE_FILTER_VALUES, timeTabs} from "./Constants";
 import useDatePicker from "./useDatePicker";
+import DetailEventsModal from "./Profile/features/components/DetailEventsModal";
 
 const EventsPosts = () => {
 
     const [activeDateTab, setActiveDateTab] = useState(DATE_FILTER_KEYS.day);
+    const [show, setShow] = useState(false);
+    const [currentModalHeader, setCurrentModalHeader] = useState('');
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const events = {
         April: {
@@ -94,7 +100,12 @@ const EventsPosts = () => {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         marginTop: '10px'
-    }}>
+    }}
+    onClick={() => {
+        setCurrentModalHeader('Мероприятие')
+        handleShow()}}
+
+    >
         Мероприятие
     </div>
     <div style={{
@@ -128,6 +139,7 @@ const EventsPosts = () => {
     }}>
         Мероприятие
     </div>
+            <DetailEventsModal header={currentModalHeader} show={show} handleClose={handleClose} />
 </div>
     );
 };

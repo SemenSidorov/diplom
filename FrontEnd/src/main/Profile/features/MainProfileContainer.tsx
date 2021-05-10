@@ -4,7 +4,7 @@ import Footer from "../../Footer/Footer";
 import {menuTabs} from "../../Constants";
 import NewsList from "./components/NewsList";
 import EventsPage from "./components/EventsPage";
-import {Container} from "react-bootstrap";
+import {Col, Container} from "react-bootstrap";
 import NavPanel from "../../Navigation";
 
 export interface mainProfileContainerInterface {
@@ -19,12 +19,15 @@ const MainProfileContainer = ({currentTab}: mainProfileContainerInterface) => {
                 return <NewsList />;
             case menuTabs.EVENTS:
                 return <EventsPage />;
+            case menuTabs.EDIT:
+                return <Col md={9}>Редактирование страницы</Col>
             case menuTabs.PROFILE:
                 return  <MainProfile currentTab={currentTab}/>
             default:
                 return <NewsList />
         }
     }, [currentTab]);
+
     const isMobile =  window.screen.width < 1025;
 
     return (

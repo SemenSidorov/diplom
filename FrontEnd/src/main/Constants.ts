@@ -15,7 +15,8 @@ export interface TabsTypes {
 export const menuTabs = {
     NEWS: 1,
     EVENTS: 2,
-    PROFILE: 3
+    PROFILE: 3,
+    EDIT: 4,
 }
 
 export const DATE_FILTER_KEYS = {
