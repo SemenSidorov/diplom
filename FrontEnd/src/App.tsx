@@ -6,8 +6,6 @@ import AuthContainer from "./main/Auth/AuthContainer";
 import ProfileContainer from "./main/Profile/ProfileContainer";
 
 function App() {
-    //todo логика для получения айди и статуса авторизации
-    console.log(9)
   return (
       <Switch>
         <Route exact path='/' render={() => <AppLayoutContainer/>}/>

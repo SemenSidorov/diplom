@@ -7,6 +7,5 @@ export interface MainRoutes {
 export const mainRoutes: MainRoutes = {
     PROFILE: '/profile',
     LOGIN: '/login',
-    REGISTER: '/register'
-
+    REGISTER: '/register',
 };
