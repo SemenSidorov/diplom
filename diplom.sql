@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 29 2021 г., 21:13
+-- Время создания: Май 11 2021 г., 21:03
 -- Версия сервера: 10.3.22-MariaDB
 -- Версия PHP: 7.1.33
 
@@ -34,30 +34,32 @@ CREATE TABLE `elements` (
   `SECTION_ID` int(11) DEFAULT NULL,
   `PREVIEW_PICTURE` varchar(100) DEFAULT NULL,
   `PREVIEW_TEXT` text DEFAULT NULL,
-  `DETAIL_TEXT` text DEFAULT NULL
+  `DETAIL_TEXT` text DEFAULT NULL,
+  `DATE_START` int(11) NOT NULL,
+  `DATE_EXP` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `elements`
 --
 
-INSERT INTO `elements` (`ID`, `IBLOCK_ID`, `NAME`, `SECTION_ID`, `PREVIEW_PICTURE`, `PREVIEW_TEXT`, `DETAIL_TEXT`) VALUES
-(1, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd'),
-(2, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv'),
-(3, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd'),
-(4, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv'),
-(5, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd'),
-(6, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv'),
-(7, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd'),
-(8, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv'),
-(9, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd'),
-(10, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv'),
-(11, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd'),
-(12, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv'),
-(13, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd'),
-(14, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv'),
-(15, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd'),
-(16, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv');
+INSERT INTO `elements` (`ID`, `IBLOCK_ID`, `NAME`, `SECTION_ID`, `PREVIEW_PICTURE`, `PREVIEW_TEXT`, `DETAIL_TEXT`, `DATE_START`, `DATE_EXP`) VALUES
+(1, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
+(2, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0),
+(3, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
+(4, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0),
+(5, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
+(6, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0),
+(7, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
+(8, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0),
+(9, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
+(10, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0),
+(11, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
+(12, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0),
+(13, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
+(14, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0),
+(15, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
+(16, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -75,7 +77,8 @@ CREATE TABLE `ibocks` (
 --
 
 INSERT INTO `ibocks` (`ID`, `NAME`) VALUES
-(1, 'news');
+(1, 'news'),
+(2, 'events');
 
 -- --------------------------------------------------------
 
@@ -136,6 +139,8 @@ CREATE TABLE `users` (
   `ID` int(11) NOT NULL,
   `LOGIN` varchar(30) NOT NULL,
   `PASSWORD` varchar(255) NOT NULL,
+  `TOKEN` varchar(11) DEFAULT NULL,
+  `LAST_AUTH` int(11) NOT NULL,
   `IS_ADMIN` tinyint(1) DEFAULT NULL,
   `NAME` varchar(30) DEFAULT NULL,
   `LAST_NAME` varchar(50) DEFAULT NULL,
@@ -150,8 +155,20 @@ CREATE TABLE `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`ID`, `LOGIN`, `PASSWORD`, `IS_ADMIN`, `NAME`, `LAST_NAME`, `MIDDLE_NAME`, `GROUP_NUMBER`, `CREDIT_BOOK_NUMBER`, `PHONE_NUMBER`, `EMAIL`) VALUES
-(1, 'biba', '$2y$10$0EGkfJ/f/Jshz7EbnvrR/OAbeRYQRd2NN8cQa05ELlLMIavZlrFkm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `users` (`ID`, `LOGIN`, `PASSWORD`, `TOKEN`, `LAST_AUTH`, `IS_ADMIN`, `NAME`, `LAST_NAME`, `MIDDLE_NAME`, `GROUP_NUMBER`, `CREDIT_BOOK_NUMBER`, `PHONE_NUMBER`, `EMAIL`) VALUES
+(1, 'biba', '$2y$10$0EGkfJ/f/Jshz7EbnvrR/OAbeRYQRd2NN8cQa05ELlLMIavZlrFkm', NULL, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users_events`
+--
+
+CREATE TABLE `users_events` (
+  `ID` int(11) NOT NULL,
+  `USER_ID` int(11) NOT NULL,
+  `EVENT_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Индексы сохранённых таблиц
@@ -194,6 +211,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Индексы таблицы `users_events`
+--
+ALTER TABLE `users_events`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -207,7 +230,7 @@ ALTER TABLE `elements`
 -- AUTO_INCREMENT для таблицы `ibocks`
 --
 ALTER TABLE `ibocks`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `properties`
@@ -232,6 +255,12 @@ ALTER TABLE `test`
 --
 ALTER TABLE `users`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT для таблицы `users_events`
+--
+ALTER TABLE `users_events`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
