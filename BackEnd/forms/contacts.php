@@ -35,7 +35,6 @@
   $mail = new PHPMailer;
 
   $mail->CharSet = 'UTF-8';
-  $mail->From      = $strEmail;
   $mail->From      = 'lol.testmail.kek@mail.ru';
   $mail->FromName  = 'Сообщение с формы обратной связи';
   $mail->Subject   = 'Сообщение с формы обратной связи';

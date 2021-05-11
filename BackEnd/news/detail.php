@@ -8,5 +8,5 @@ if((int)$_GET["USER_ID"]){
 
 $result = $db->GetByID('elements', $id, ["NAME", "DETAIL_TEXT"]);
 $pictures = $db->GetList('properties', ["ELEMENT_ID" => $id, "NAME" => "ADD_PICTURES"]);
-if(is_array($pictures)) $result["ADD_PICTURES"] = $pictures;
+if($pictures) $result["ADD_PICTURES"] = $pictures;
 echo json_encode($result);
