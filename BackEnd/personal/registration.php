@@ -17,7 +17,7 @@ $rand_num = rand(0, 63);
 $str = str_shuffle($str);
 $token = substr($str, $rand_num, $rand_num + 11);
 
-$result = $db->Add('users', ["LOGIN" => $login, "PASSWORD" => $password, "LAST_AUTCH" => time(), "TOKEN" => $token]);
+$result = $db->Add('users', ["LOGIN" => $login, "PASSWORD" => $password, "LAST_AUTH" => time(), "TOKEN" => $token]);
 if((int)$result){
     echo json_encode(["LOGIN" => $login, "TOKEN" => $token, "ID" => $result]);
 }else{
