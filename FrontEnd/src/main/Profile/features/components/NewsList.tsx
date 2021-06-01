@@ -2,6 +2,8 @@ import React from 'react';
 import New from "./New";
 import {Col, Container} from "react-bootstrap";
 import { useAsync } from "@umijs/hooks";
+import {UserTypes} from "../../../Constants";
+import {useParams} from "react-router-dom";
 
 export interface NewI {
     ID: string
@@ -16,13 +18,14 @@ interface NewsListI {
     values: Array<NewI>
 }
 //todo перенести в папку с методами
-const getNews = (): Promise<NewsListI> => {
-    return fetch(`http://backend/BackEnd/news/news.php?PAGEN=1&USER_ID=13`).then(res => res.json());
+const getNews = (userId: string): Promise<NewsListI> => {
+    return fetch(`http://backend/BackEnd/news/news.php?PAGEN=1&USER_ID=${userId}`).then(res => res.json());
 };
 
 
 const NewsList = () => {
-    const { data, loading, timer, run } = useAsync<NewsListI>(() => getNews() , []);
+    const { userId } : UserTypes = useParams();
+    const { data, loading } = useAsync<NewsListI>(() => getNews(userId) , []);
 
     return (
         <div style={{backgroundColor: '#ebedf0', height: "100%", width: "100%",  overflow: "auto"}}>
