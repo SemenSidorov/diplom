@@ -1,10 +1,18 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Avatar from '../images/first.png';
 import styled from 'styled-components'
+import {useParams} from "react-router-dom";
+import { useAsync } from "@umijs/hooks";
 
-import {DATE_FILTER_KEYS, DATE_FILTER_VALUES, timeTabs} from "./Constants";
+import {DATE_FILTER_KEYS, DATE_FILTER_VALUES, timeTabs, UserTypes} from "./Constants";
 import useDatePicker from "./useDatePicker";
 import DetailEventsModal from "./Profile/features/components/DetailEventsModal";
+
+
+//todo перенести в папку с методами
+const getEvents = (dateFrom: string, dateTo:string ,userId: string): Promise<any> => {
+    return fetch(`http://backend/BackEnd/events/all.php?DATE_START=${dateFrom}&DATE_EXP=${dateTo}&USER_ID=${userId}`).then(res => res.json());
+};
 
 const EventsPosts = () => {
 
@@ -42,6 +50,7 @@ const EventsPosts = () => {
         onNextDateClick] = useDatePicker(activeDateTab, DATE_FILTER_KEYS);
 
 
+
     const currentDateInterval = useMemo(() => {
         if (activeDateTab === DATE_FILTER_KEYS.day) {
             return dateFrom.format('DD MMMM YYYY')
@@ -53,7 +62,11 @@ const EventsPosts = () => {
 
     const currentDatePickerContainerWidth = useMemo(() => (
         currentDateInterval.length < 19 ? 240 : 300
-    ), [activeDateTab, currentDateInterval])
+    ), [activeDateTab, currentDateInterval]);
+
+    const { userId } : UserTypes = useParams();
+
+    const { data, loading } = useAsync(() => getEvents(dateFrom.format('DD-MM-YYYY'), dateTo.format('DD-MM-YYYY'), userId) , [dateFrom, dateTo]);
 
     return (
         <div style={{
