@@ -11,39 +11,18 @@ import {getCookieByName} from "./Auth/Login";
 
 
 //todo перенести в папку с методами
-const getEvents = (dateFrom, dateTo ,userId, token) => {
-    return fetch(`http://backend/BackEnd/events/all.php?&TOKEN=${token}&DATE_START=${dateFrom}&DATE_EXP=${dateTo}&USER_ID=${userId}`).then(res => res.json());
+const getEvents = (isMyEvents, dateFrom, dateTo ,userId, token) => {
+    return fetch(`http://backend/BackEnd/events/all.php?METHOD=${isMyEvents ? 'get_for_user' : ''}&TOKEN=${token}&DATE_START=${dateFrom}&DATE_EXP=${dateTo}&USER_ID=${userId}`).then(res => res.json());
 };
 
-const EventsPosts = () => {
+const EventsPosts = ({isMyEvents = false}) => {
     const token = getCookieByName('access_token');
     const [activeDateTab, setActiveDateTab] = useState(DATE_FILTER_KEYS.day);
     const [show, setShow] = useState(false);
-    const [currentModalHeader, setCurrentModalHeader] = useState('');
+    const [currentModalData, setCurrentModalData] = useState([]);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    const events = {
-        April: {
-            dateText: 'Апрель',
-            value: [
-                {id: 1, name: 'Мероприятие 1', date: '15.04.2021'},
-                {id: 2, name: 'Мероприятие 2', date: '15.04.2021'},
-                {id: 3, name: 'Мероприятие 3', date: '15.04.2021'},
-                {id: 4, name: 'Мероприятие 4', date: '15.04.2021'}
-            ]
-        },
-        March: {
-            dateText: 'Март',
-            value: [
-                {id: 1, name: 'Мероприятие 1', date: '15.05.2021'},
-                {id: 2, name: 'Мероприятие 2', date: '15.05.2021'},
-                {id: 3, name: 'Мероприятие 3', date: '15.05.2021'},
-                {id: 4, name: 'Мероприятие 4', date: '15.05.2021'}
-            ]
-        }
-    };
 
     const [dateFrom,
         dateTo,
@@ -67,7 +46,7 @@ const EventsPosts = () => {
 
     const { userId } = useParams();
 
-    const { data, loading } = useAsync(() => getEvents(dateFrom.format('DD-MM-YYYY'), dateTo.format('DD-MM-YYYY'), userId, token) , [dateFrom, dateTo]);
+    const { data, loading } = useAsync(() => getEvents(isMyEvents, dateFrom.format('DD-MM-YYYY'), dateTo.format('DD-MM-YYYY'), userId, token) , [dateFrom, dateTo]);
 
     return (
         <div style={{
@@ -105,55 +84,26 @@ const EventsPosts = () => {
             {/*<img style={} src/>*/}
         </DatePickerClickBoxes>
     </DatePickerContainer>
+    {
+        data?.map(el => {
+            return <div style={{
+                height: 134,
+                borderRadius: 35,
+                backgroundImage: `url(${Avatar})`,
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                marginTop: '10px'
+            }}
+                        onClick={() => {
+                            setCurrentModalData(el);
+                            handleShow()}}
 
-
-    <div style={{
-        height: 134,
-        borderRadius: 35,
-        backgroundImage: `url(${Avatar})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        marginTop: '10px'
-    }}
-    onClick={() => {
-        setCurrentModalHeader('Мероприятие')
-        handleShow()}}
-
-    >
-        Мероприятие
-    </div>
-    <div style={{
-        height: 134,
-        borderRadius: 35,
-        backgroundImage: `url(${Avatar})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        marginTop: '10px',
-    }}>
-        Мероприятие
-    </div>
-    <div style={{
-        height: 134,
-        borderRadius: 35,
-        backgroundImage: `url(${Avatar})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        marginTop: '10px'
-    }}>
-        Мероприятие
-    </div>
-            <div style={{
-        height: 134,
-        borderRadius: 35,
-        backgroundImage: `url(${Avatar})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        marginTop: '10px',
-        marginBottom: 60,
-    }}>
-        Мероприятие
-    </div>
-            <DetailEventsModal token={token} header={currentModalHeader} show={show} handleClose={handleClose} />
+            >
+                {el.NAME}
+            </div>
+        })
+    }
+    <DetailEventsModal text={currentModalData?.PREVIEW_TEXT} token={token} header={currentModalData?.NAME} show={show} handleClose={handleClose} />
 </div>
     );
 };
