@@ -52,7 +52,7 @@ class DB {
 		$order_sql = '';
         if($order){
             foreach($order as $key => $val){
-                if(in_array(strtoupper(trim($val)), ["ASC","DESC","RAND"])) $order_sql .= ($order_sql? ', ' : '') . '"' . $key . '"' . ' ' . '"' . $val . '"';
+                if(in_array(strtoupper(trim($val)), ["ASC","DESC","RAND"])) $order_sql .= ($order_sql? ', ' : '') . '`' . $key . '`' . ' ' . strtoupper(trim($val));
             }
             return 'ORDER BY ' . $order_sql;
         }

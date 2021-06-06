@@ -3,7 +3,8 @@ $db = new DB;
 
 // echo phpinfo();
 
-print_r($db->GetList('elements'));
+print_r(
+    $result = $db->GetList('elements', ["IBLOCK_ID" => 1], ['ID', 'NAME', 'PREVIEW_PICTURE', 'PREVIEW_TEXT', 'DATE_START'], ["DATE_START" => "DESC"]));
 
 // print_r($db->GetById('test', 3, ['NAME', 'ID']));
 
