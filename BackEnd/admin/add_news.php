@@ -56,4 +56,4 @@ foreach($_FILES["ADD_PICTURES"]["error"] as $key => $error){
         }
     }
 }
-echo json_encode(["EVENT_ID" => $result]);
+echo json_encode(["NEWS_ID" => $result]);
