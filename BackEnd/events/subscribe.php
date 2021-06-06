@@ -16,9 +16,8 @@ $event_id = $_GET["EVENT_ID"];
 
 $check_sub = $db->GetList('users_events', ["USER_ID" => $id, "EVENT_ID" => $event_id]);
 if($check_sub){
-    echo json_encode(["ERROR" => "Пользователь уже подписан на данное мероприятие"]);
+    echo json_encode(["ERROR" => "Пользователь уже подписан на данное мероприятие", "USER" => $check_user[0]]);
 }else{
     $db->Add('users_events', ["USER_ID" => $id, "EVENT_ID" => $event_id]);
     echo "success";
 }
-echo json_encode($check_user[0]);
