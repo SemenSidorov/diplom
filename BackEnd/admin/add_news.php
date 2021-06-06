@@ -1,8 +1,8 @@
 <?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 $db = new DB;
 
-$token = $_GET["TOKEN"];
-$id = $_GET["USER_ID"];
+$token = $_POST["TOKEN"];
+$id = $_POST["USER_ID"];
 $check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token], ["ID", "IS_ADMIN", "LAST_AUTH"]);
 
 if($check_user){
@@ -13,9 +13,9 @@ if($check_user){
     die(json_encode(["ERROR" => "Пользователя с таким токеном не существует"]));
 }
 
-$name = $_GET["NAME"];
-$preview_text = $_GET["PREVIEW_TEXT"];
-$detail_text = $_GET["DETAIL_TEXT"];
+$name = $_POST["NAME"];
+$preview_text = $_POST["PREVIEW_TEXT"];
+$detail_text = $_POST["DETAIL_TEXT"];
 $time = time();
 $hash = hash('ripemd160', $name);
 
