@@ -1,17 +1,19 @@
 import React from 'react';
 import first from "../../../../images/first.png";
+import {NewI} from "./NewsList";
 
-const New = () => {
+const New = ({NAME, ID, PREVIEW_TEXT, PREVIEW_PICTURE}: NewI) => {
     return (
         <div style={{backgroundColor: "#FFF",width: '100%',marginTop: 5}}>
             <div style={{textAlign: "left", padding: 10}}>
-                Байден считает Путина убийцей и надеется, что он ответит за вмешательство в выборы президента США!
-                Байден, только не мсти в российских подъездах, пожалуйста 🥺
+                {NAME}
+                <br/>
+                {PREVIEW_TEXT}
             </div>
             <div style={{display: "flex",justifyContent: 'center',width: "100%"}}>
                 <img
                     className="d-block w-100"
-                    src={first}
+                    src={first} //todo src на картинки
                     alt="First slide"
                 />
             </div>

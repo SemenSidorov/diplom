@@ -2,13 +2,20 @@ import React, {useCallback, useState} from 'react';
 import {Button, Col, Container, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import { Redirect } from 'react-router'
+//todo перенести в utils
+export const getCookieByName = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    // @ts-ignore
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 const Login = () => {
     const [login, setLogin] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
     const getCookie = (cookie_name: string) => {
-        const results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+        const results = document.cookie.match( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
         return !!results;
     };
 
@@ -16,8 +23,10 @@ const Login = () => {
 
     const auth = useCallback(async () => {
         const result = await fetch(`http://backend/BackEnd/personal/autoresize.php?LOGIN=${login}&PASSWORD=${password}`);
-        const res: {LOGIN: string, TOKEN: string} = await result.json();
+        const res: {LOGIN: string, TOKEN: string, ID: string} = await result.json();
         if (res.TOKEN) {
+            console.log(res);
+            document.cookie = `user_id=${res.ID}`;
             document.cookie = `access_token=${res.TOKEN}`;
             setIsAuth(true)
         }
@@ -26,7 +35,7 @@ const Login = () => {
     return (
         <Container fluid style={{padding:'0px'}}>
             {
-                isAuth ?  <Redirect to="/profile/23/3"/> : ''
+                isAuth ?  <Redirect to={`/profile/${getCookieByName('user_id')}/3/`}/> : ''
             }
             <Form className={'main__register-form'} style={{marginTop: 125}}>
                 <Col md={6} xl={2} style={{margin: 'auto'}}>
