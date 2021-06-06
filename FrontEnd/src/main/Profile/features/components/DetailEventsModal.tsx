@@ -5,6 +5,7 @@ import {getCookieByName} from "../../../Auth/Login";
 
 const DetailEventsModal = ({ header, show, handleClose }) => {
     const token = getCookieByName('access_token');
+    console.log(token)
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>

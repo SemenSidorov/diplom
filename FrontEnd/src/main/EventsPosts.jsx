@@ -7,15 +7,16 @@ import { useAsync } from "@umijs/hooks";
 import {DATE_FILTER_KEYS, DATE_FILTER_VALUES, timeTabs, UserTypes} from "./Constants";
 import useDatePicker from "./useDatePicker";
 import DetailEventsModal from "./Profile/features/components/DetailEventsModal";
+import {getCookieByName} from "./Auth/Login";
 
 
 //todo перенести в папку с методами
-const getEvents = (dateFrom: string, dateTo:string ,userId: string): Promise<any> => {
-    return fetch(`http://backend/BackEnd/events/all.php?DATE_START=${dateFrom}&DATE_EXP=${dateTo}&USER_ID=${userId}`).then(res => res.json());
+const getEvents = (dateFrom, dateTo ,userId, token) => {
+    return fetch(`http://backend/BackEnd/events/all.php?&TOKEN=${token}&DATE_START=${dateFrom}&DATE_EXP=${dateTo}&USER_ID=${userId}`).then(res => res.json());
 };
 
 const EventsPosts = () => {
-
+    const token = getCookieByName('access_token');
     const [activeDateTab, setActiveDateTab] = useState(DATE_FILTER_KEYS.day);
     const [show, setShow] = useState(false);
     const [currentModalHeader, setCurrentModalHeader] = useState('');
@@ -64,9 +65,9 @@ const EventsPosts = () => {
         currentDateInterval.length < 19 ? 240 : 300
     ), [activeDateTab, currentDateInterval]);
 
-    const { userId } : UserTypes = useParams();
+    const { userId } = useParams();
 
-    const { data, loading } = useAsync(() => getEvents(dateFrom.format('DD-MM-YYYY'), dateTo.format('DD-MM-YYYY'), userId) , [dateFrom, dateTo]);
+    const { data, loading } = useAsync(() => getEvents(dateFrom.format('DD-MM-YYYY'), dateTo.format('DD-MM-YYYY'), userId, token) , [dateFrom, dateTo]);
 
     return (
         <div style={{
@@ -152,7 +153,7 @@ const EventsPosts = () => {
     }}>
         Мероприятие
     </div>
-            <DetailEventsModal header={currentModalHeader} show={show} handleClose={handleClose} />
+            <DetailEventsModal token={token} header={currentModalHeader} show={show} handleClose={handleClose} />
 </div>
     );
 };

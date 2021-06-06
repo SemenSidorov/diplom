@@ -31,7 +31,7 @@ const MainProfileContainer = ({currentTab}: mainProfileContainerInterface) => {
     const isMobile =  window.screen.width < 1025;
 
     return (
-        <Container style={{display: 'flex', justifyContent: 'center'}}>
+        <Container style={{display: 'flex', justifyContent: 'center', padding: 0}}>
             <NavPanel />
             {currentMainComponent}
             <Footer isMobile={isMobile}/>

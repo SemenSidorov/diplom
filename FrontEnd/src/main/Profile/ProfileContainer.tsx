@@ -19,6 +19,8 @@ const ProfileContainer = () => {
 
     const getHeaderNameByCurrentTab = useMemo(() => {
         switch (Number(currentTab)) {
+            case menuTabs.MESSAGES:
+                return 'Сообщения';
             case menuTabs.NEWS:
                 return 'Новости';
             case menuTabs.EVENTS:
