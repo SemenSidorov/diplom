@@ -13,6 +13,7 @@ export interface TabsTypes {
 }
 
 export const menuTabs = {
+    MESSAGES: 0,
     NEWS: 1,
     EVENTS: 2,
     PROFILE: 3,

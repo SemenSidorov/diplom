@@ -19,6 +19,9 @@ const NavPanel = () => {
                     <Link style={linkStyles} to={`/profile/${userId}/3`}>
                         Моя страница
                     </Link>
+                    <Link style={linkStyles} to={`/profile/${userId}/messages`}>
+                        Сообщения
+                    </Link>
                     <Link style={linkStyles} to={`/profile/${userId}/1`}>
                         Новости
                     </Link>
