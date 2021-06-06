@@ -36,7 +36,7 @@ const MainProfile = ({currentTab}: mainProfileContainerInterface) => {
                 <div style={{fontWeight: 600, fontSize: 16, textAlign: 'center', marginTop: 25 }}>
                     Мои мероприятия
                 </div>
-                <EventsPosts />
+                <EventsPosts isMyEvents/>
             </Col>
         </div>
     );
