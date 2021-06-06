@@ -30,7 +30,7 @@ const getNews = (userId: string, token: any): Promise<NewsListI> => {
 const NewsList = () => {
     const { userId } : UserTypes = useParams();
     const token = getCookieByName('access_token')
-    const { data, loading } = useAsync<NewsListI>(() => getNews(userId, token) , []);
+    const { data, loading, run } = useAsync<NewsListI>(() => getNews(userId, token) , []);
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -40,7 +40,7 @@ const NewsList = () => {
                     <SelectButton style={{ margin: '12px auto',width: 250, color: '#fff' }} onClick={() => {
                         setShowModal(true)
                     }}>
-                        Добавить мероприятие
+                        Добавить новость
                     </SelectButton>
                     {
                         loading && <div>
@@ -56,7 +56,7 @@ const NewsList = () => {
                 </Col>
 
             </Container>
-            <AddNews token={token} header={'Добавление новости'} userId={userId} show={showModal} handleClose={() => {
+            <AddNews onAdd={() => run()} token={token} header={'Добавление новости'} userId={userId} show={showModal} handleClose={() => {
                 setShowModal(false)
             }}/>
         </div>

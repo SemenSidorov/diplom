@@ -7,7 +7,7 @@ const initialNewData = {
     files: [],
 }
 
-const AddNews = ({userId, header, show, handleClose, token }) => {
+const AddNews = ({userId,onAdd, header, show, handleClose, token }) => {
 
     const [newData, setNewData] = useState(initialNewData);
 
@@ -15,7 +15,7 @@ const AddNews = ({userId, header, show, handleClose, token }) => {
         <Modal show={show} onHide={() => {
             setNewData(initialNewData);
             handleClose()
-        }} size='lg' >
+        }} size='lg' style={{marginTop: '15%'}} >
             <Modal.Header closeButton>
                 <Modal.Title>{header}</Modal.Title>
             </Modal.Header>
@@ -45,6 +45,7 @@ const AddNews = ({userId, header, show, handleClose, token }) => {
                 <Button variant="success" onClick={async () => {
                     const data = fetch(`http://backend/BackEnd/admin/add_news.php?USER_ID=${userId}&TOKEN=${token}&NAME=${newData.title}&PREVIEW_TEXT=${newData.description}&DETAIL_TEXT=${newData.description}`);
                     setNewData(initialNewData);
+                    onAdd()
                     handleClose();
                 }}>
                     Добавить
