@@ -28,7 +28,7 @@ if(!empty($_FILES["PREVIEW_PICTURE"]) && exif_imagetype($_FILES['PREVIEW_PICTURE
 }
 
 $result = $db->Add("elements", [
-    "IBLOCK_ID" => 1, 
+    "IBLOCK_ID" => 2, 
     "NAME" => $name, 
     "PREVIEW_PICTURE" => $destination, 
     "PREVIEW_TEXT" => $preview_text, 
