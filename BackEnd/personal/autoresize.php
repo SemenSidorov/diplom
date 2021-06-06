@@ -5,7 +5,7 @@ $login = $_GET["LOGIN"];
 $password = $_GET["PASSWORD"];
 $check_user = $db->GetList('users', ["LOGIN" => $login], ["ID", "LOGIN", "PASSWORD", "NAME", "LAST_NAME", "IS_ADMIN"]);
 
-$str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQSTUVWXYZ1234567890~!@#$%^&*_-+=";
+$str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQSTUVWXYZ1234567890~!@#%^*_-+=";
 $rand_num = rand(0, 63);
 $str = str_shuffle($str);
 $token = substr($str, $rand_num, $rand_num + 11);
