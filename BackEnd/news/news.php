@@ -16,6 +16,6 @@ if($check_user){
 }
 
 if($pagen) $top_news = $count_news * ($pagen - 1);
-$result = $db->GetList('elements', ["IBLOCK_ID" => 1], ['ID', 'NAME', 'PREVIEW_PICTURE', 'PREVIEW_TEXT'], [], $top_news, $count_news);
+$result = $db->GetList('elements', ["IBLOCK_ID" => 1], ['ID', 'NAME', 'PREVIEW_PICTURE', 'PREVIEW_TEXT'], ["DATE_START" => "DESC"], $top_news, $count_news);
 $count = $db->Count('elements', ["IBLOCK_ID" => 1]);
 echo json_encode(["values" => $result, "count_news_all" => $count, "this_page" => ($pagen ? $pagen : 1)]);
