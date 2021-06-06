@@ -85,7 +85,7 @@ const EventsPosts = ({isMyEvents = false}) => {
         </DatePickerClickBoxes>
     </DatePickerContainer>
     {
-        data?.map(el => {
+        data?.length && data?.map(el => {
             return <div style={{
                 height: 134,
                 borderRadius: 35,
@@ -103,7 +103,7 @@ const EventsPosts = ({isMyEvents = false}) => {
             </div>
         })
     }
-    <DetailEventsModal text={currentModalData?.PREVIEW_TEXT} token={token} header={currentModalData?.NAME} show={show} handleClose={handleClose} />
+    <DetailEventsModal userId={userId} id={currentModalData?.ID} text={currentModalData?.PREVIEW_TEXT} token={token} header={currentModalData?.NAME} show={show} handleClose={handleClose} />
 </div>
     );
 };
