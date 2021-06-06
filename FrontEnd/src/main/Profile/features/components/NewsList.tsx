@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import New from "./New";
 import {Col, Container} from "react-bootstrap";
 import { useAsync } from "@umijs/hooks";
 import {UserTypes} from "../../../Constants";
 import {useParams} from "react-router-dom";
 import {getCookieByName} from "../../../Auth/Login";
+import {SelectButton, SelectButtonContainer} from "../../../EventsPosts";
+import AddNews from "../../../addNews";
 
 export interface NewI {
     ID: string
@@ -29,11 +31,17 @@ const NewsList = () => {
     const { userId } : UserTypes = useParams();
     const token = getCookieByName('access_token')
     const { data, loading } = useAsync<NewsListI>(() => getNews(userId, token) , []);
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <div style={{backgroundColor: '#ebedf0', height: "100%", width: "100%",  overflow: "auto"}}>
-            <Container style={{display: 'flex', justifyContent: 'center'}}>
+            <Container style={{display: 'flex', padding: 0, justifyContent: 'center'}}>
                 <Col xl={10} xs={12}>
+                    <SelectButton style={{ margin: '12px auto',width: 250, color: '#fff' }} onClick={() => {
+                        setShowModal(true)
+                    }}>
+                        Добавить мероприятие
+                    </SelectButton>
                     {
                         loading && <div>
                             Загрузка...
@@ -48,6 +56,9 @@ const NewsList = () => {
                 </Col>
 
             </Container>
+            <AddNews token={token} header={'Добавление новости'} userId={userId} show={showModal} handleClose={() => {
+                setShowModal(false)
+            }}/>
         </div>
     );
 };
