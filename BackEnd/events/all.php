@@ -2,6 +2,17 @@
 $db = new DB;
 $filter = ["IBLOCK_ID" => 2];
 
+$token = $_GET["TOKEN"];
+$id = $_GET["USER_ID"];
+$check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token], ["ID", "IS_ADMIN", "LAST_AUTH"]);
+
+if($check_user){
+    if($check_user[0]["LAST_AUTH"] + 600 < time()) die(json_encode(["ERROR" => "Пользователь не авторизован"]));
+    $db->Update('users', $check_user[0]["ID"], ["LAST_AUTH" => time()]);
+}else{
+    die(json_encode(["ERROR" => "Пользователя с таким токеном не существует"]));
+}
+
 if($_GET["DATE_START"] && $_GET["DATE_EXP"]){
     $date_start = strtotime($_GET["DATE_START"]);
     $date_exp = strtotime($_GET["DATE_EXP"]);
@@ -10,7 +21,6 @@ if($_GET["DATE_START"] && $_GET["DATE_EXP"]){
 }
 
 if((int)$_GET["USER_ID"]){
-    $db->Update('users', (int)$_GET["USER_ID"], ["LAST_AUTH" => time()]);
     $events = $db->GetList('users_events', ["USER_ID" => (int)$_GET["USER_ID"]]);
     $ar_events_id = [];
     foreach($events as $event){

@@ -1,11 +1,23 @@
 <?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 $db = new DB;
 
+$token = $_GET["TOKEN"];
+$id = $_GET["USER_ID"];
+$check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token], ["ID", "IS_ADMIN", "LAST_AUTH"]);
+
+if($check_user){
+    if($check_user[0]["LAST_AUTH"] + 600 < time()) die(json_encode(["ERROR" => "Пользователь не авторизован"]));
+    if(!$check_user[0]["IS_ADMIN"]) die(json_encode(["ERROR" => "Не админ"]));
+    $db->Update('users', $check_user[0]["ID"], ["LAST_AUTH" => time()]);
+}else{
+    die(json_encode(["ERROR" => "Пользователя с таким токеном не существует"]));
+}
+
 $name = $_GET["NAME"];
 $preview_text = $_GET["PREVIEW_TEXT"];
 $detail_text = $_GET["DETAIL_TEXT"];
-$date_start = $_GET["DATE_START"];
-$date_exp = $_GET["DATE_EXT"];
+$date_start = strtotime($_GET["DATE_START"]);
+$date_exp = strtotime($_GET["DATE_EXT"]);
 $hash = hash('ripemd160', $name);
 
 if(!empty($_FILES["PREVIEW_PICTURE"]) && exif_imagetype($_FILES['PREVIEW_PICTURE']['tmp_name']) && $_FILES["PREVIEW_PICTURE"]["error"] === 0){
