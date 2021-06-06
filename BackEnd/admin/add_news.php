@@ -32,7 +32,8 @@ $result = $db->Add("elements", [
     "PREVIEW_PICTURE" => $destination, 
     "PREVIEW_TEXT" => $preview_text, 
     "DETAIL_TEXT" => $detail_text,
-    "DATE_START" => $time
+    "DATE_START" => $time,
+    "DATE_EXP" => 0
 ]);
 
 if(!(int)$result){
