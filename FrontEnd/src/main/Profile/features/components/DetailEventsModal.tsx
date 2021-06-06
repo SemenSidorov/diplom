@@ -3,9 +3,8 @@ import {Button, Modal} from "react-bootstrap";
 import Avatar from '../../../../images/first.png';
 import {getCookieByName} from "../../../Auth/Login";
 
-const DetailEventsModal = ({text, header, show, handleClose }) => {
+const DetailEventsModal = ({id, userId, text, header, show, handleClose }) => {
     const token = getCookieByName('access_token');
-    console.log(token)
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -20,7 +19,7 @@ const DetailEventsModal = ({text, header, show, handleClose }) => {
                     Закрыть
                 </Button>
                 <Button variant="success" onClick={async () => {
-                    const data = fetch(`http://backend/BackEnd/events/subscribe.php?TOKEN=${token}&USER_ID=13&EVENT_ID=1`);
+                    const data = fetch(`http://backend/BackEnd/events/subscribe.php?TOKEN=${token}&USER_ID=${userId}&EVENT_ID=${id}`);
                     handleClose()
                 }}>
                     Записаться

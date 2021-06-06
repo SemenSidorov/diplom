@@ -20,7 +20,8 @@ interface NewsListI {
 }
 //todo перенести в папку с методами
 const getNews = (userId: string, token: any): Promise<NewsListI> => {
-    return fetch(`http://backend/BackEnd/news/news.php?TOKEN=${token}PAGEN=1&USER_ID=${userId}`).then(res => res.json());
+    console.log(userId)
+    return fetch(`http://backend/BackEnd/news/news.php?TOKEN=${token}&PAGEN=1&USER_ID=${userId}`).then(res => res.json());
 };
 
 
