@@ -40,19 +40,21 @@ if(!(int)$result){
     die(json_encode($result));
 }
 
-foreach($_FILES["ADD_PICTURES"]["error"] as $key => $error){
-    if(!$error && exif_imagetype($_FILES['ADD_PICTURES']['tmp_name'][$key])){
-        $destination = $_SERVER['DOCUMENT_ROOT'] . '/BackEnd/include/img/news/' . $hash . $time . "/" . $_FILES["ADD_PICTURES"]["name"][$key];
-        if(!rename($_FILES['ADD_PICTURES']['tmp_name'][$key], $destination)){
-            die(json_encode(["ERROR" => "Ошибка добавления файла"]));
-        }
-        $res = $db->Add("elements", [
-            "PARENT_ID" => $result, 
-            "NAME" => 'ADD_PICTURES', 
-            "VALUE" => $destination
-        ]);
-        if(!(int)$res){
-            die(json_encode($res));
+if(!empty($_FILES["ADD_PICTURES"])){
+    foreach($_FILES["ADD_PICTURES"]["error"] as $key => $error){
+        if(!$error && exif_imagetype($_FILES['ADD_PICTURES']['tmp_name'][$key])){
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/BackEnd/include/img/news/' . $hash . $time . "/" . $_FILES["ADD_PICTURES"]["name"][$key];
+            if(!rename($_FILES['ADD_PICTURES']['tmp_name'][$key], $destination)){
+                die(json_encode(["ERROR" => "Ошибка добавления файла"]));
+            }
+            $res = $db->Add("elements", [
+                "PARENT_ID" => $result, 
+                "NAME" => 'ADD_PICTURES', 
+                "VALUE" => $destination
+            ]);
+            if(!(int)$res){
+                die(json_encode($res));
+            }
         }
     }
 }
