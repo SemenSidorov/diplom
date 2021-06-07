@@ -26,7 +26,7 @@ const AddNews = ({userId,onAdd, header, show, handleClose, token }) => {
                 event.preventDefault();
                 const form = event.currentTarget;
                 const formData = new FormData(form);
-                fetch('http://backend/BackEnd/admin/add_events.php', {
+                fetch('http://backend/BackEnd/admin/add_news.php', {
                         body: formData,
                         method: "post",
                     }
