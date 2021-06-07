@@ -1,7 +1,6 @@
 <?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 $db = new DB;
 
-die(json_encode($_FILES["PREVIEW_PICTURE"]));
 $errors = [];
 $token = $_POST["TOKEN"];
 $id = $_POST["USER_ID"];
