@@ -2,9 +2,12 @@ import React from 'react';
 import {Col} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
-const ChatItem = () => {
+const ChatItem = ({socket}) => {
+    const lol = () => {
+        socket.send('hui')
+    };
     return (
-        <Link to={'/13/:1'}>
+        <div onClick={lol}>
             <Col xs={12} style={{
                 cursor: 'pointer',
                 border: '1px solid #dce1e6',
@@ -24,7 +27,7 @@ const ChatItem = () => {
                     </div>
                 </div>
             </Col>
-        </Link>
+        </div>
     );
 };
 
