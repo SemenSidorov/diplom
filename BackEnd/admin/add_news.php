@@ -26,7 +26,7 @@ if($_FILES['PREVIEW_PICTURE']){
     if($sourcePath!='' && $type){
         $dir = $_SERVER["DOCUMENT_ROOT"]."/BackEnd/include/img/news/".(int)$result."/";
         //Шифруем файл
-        $fileName = hash("crc32",'BRV'.$dir."_PREVIEW_PICTURE").".".$type;
+        $fileName = hash("crc32",'BRV'.$dir.time()."_PREVIEW_PICTURE").".".$type;
         $targetPath = $dir.$fileName;
         try{
             mkdir($dir,0755, true);
@@ -59,7 +59,7 @@ if($_FILES['ADD_PICTURES']){
         if($sourcePath!='' && $type){
             $dir = $_SERVER["DOCUMENT_ROOT"]."/BackEnd/include/img/news/".(int)$result."/";
             //Шифруем файл
-            $fileName = hash("crc32",'BRV'."_".$sect).".".$type;
+            $fileName = hash("crc32",'BRV'.time()."_".$sect).".".$type;
             $targetPath = $dir.$fileName;
             try{
                 mkdir($dir,0755, true);
