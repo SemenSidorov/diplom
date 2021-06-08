@@ -15,6 +15,6 @@ if($check_user){
 $id = (int)$_GET["ID"];
 
 $result = $db->GetByID('elements', $id, ["NAME", "DETAIL_TEXT"]);
-$pictures = $db->GetList('properties', ["ELEMENT_ID" => $id, "NAME" => "ADD_PICTURES"]);
+$pictures = $db->GetList('properties', ["PARENT_ID" => $id, "NAME" => "ADD_PICTURES"]);
 if($pictures) $result["ADD_PICTURES"] = $pictures;
 echo json_encode($result);

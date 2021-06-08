@@ -11,7 +11,6 @@ if($check_user){
             "NAME" => $_GET["NAME"], 
             "LAST_NAME" => $_GET["LAST_NAME"], 
             "MIDDLE_NAME" => $_GET["MIDDLE_NAME"], 
-            "IS_ADMIN" => $_GET["IS_ADMIN"], 
             "GROUP_NUMBER" => $_GET["GROUP_NUMBER"], 
             "CREDIT_BOOK_NUMBER" => $_GET["CREDIT_BOOK_NUMBER"], 
             "PHONE_NUMBER" => $_GET["PHONE_NUMBER"], 
