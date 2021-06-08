@@ -12,7 +12,6 @@ const AddNews = ({userId,onAdd, header, show, handleClose, token }) => {
     const [newData, setNewData] = useState(initialNewData);
     const [fileName, setFileName] = useState("Загрузите файл...");
     const [file, setFile] = useState({});
-    console.log(fileName)
 
     return (
         <Modal show={show} onHide={() => {
@@ -22,15 +21,16 @@ const AddNews = ({userId,onAdd, header, show, handleClose, token }) => {
             <Modal.Header closeButton>
                 <Modal.Title>{header}</Modal.Title>
             </Modal.Header>
-            <Form id={'form'} onSubmit={(event) => {
+            <Form id={'form'} onSubmit={async (event) => {
                 event.preventDefault();
                 const form = event.currentTarget;
                 const formData = new FormData(form);
-                fetch('http://backend/BackEnd/admin/add_news.php', {
+                await fetch('http://backend/BackEnd/admin/add_news.php', {
                         body: formData,
                         method: "post",
                     }
                 )
+                handleClose()
             }} >
                 <Modal.Body style={{background: 'rgb(235, 237, 240)'}}>
                             <Col md={12} xl={12} style={{margin: 'auto', background: '#fff', padding: 9, marginBottom: 5, borderRadius: 5}}>
