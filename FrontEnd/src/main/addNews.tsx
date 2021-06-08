@@ -12,13 +12,13 @@ const AddNews = ({userId,onAdd, header, show, handleClose, token }) => {
 
     const [newData, setNewData] = useState(initialNewData);
     const [fileName, setFileName] = useState("Загрузите файл...");
-    const [file, setFile] = useState({});
+    const [fileNames, setFileNames] = useState('');
 
     return (
         <Modal show={show} onHide={() => {
             setNewData(initialNewData);
             handleClose()
-        }} size='lg' style={{marginTop: '15%'}} >
+        }} size='lg'>
             <Modal.Header closeButton>
                 <Modal.Title>{header}</Modal.Title>
             </Modal.Header>
@@ -76,13 +76,30 @@ const AddNews = ({userId,onAdd, header, show, handleClose, token }) => {
                                         label={fileName}
                                         data-browse="Выбрать файл"
                                         onChange={(e) => {
-                                            setFile(e.target.files[0]);
                                             setFileName(e.target.files[0].name)
                                         } }
                                         custom
                                     />
                                 </Form.Group>
                             </Col>
+                    <Col md={12} xl={12} style={{margin: 'auto', background: '#fff', padding: 9, marginBottom: 5, borderRadius: 5}}>
+                        <div style={{textAlign: 'left', fontWeight: 400, marginBottom: 10}}>Картинки для детального отображения</div>
+                        <Form.Group>
+                            <Form.File
+                                type="file"
+                                name='ADD_PICTURES[]'
+                                id="inputGroupFile01"
+                                label={fileNames}
+                                data-browse="Перетащите или выберите файлы"
+                                multiple
+                                onChange={(e) => {
+                                    // @ts-ignore
+                                    setFileNames(Object.values(e.target.files).map(el => el.name).join(', '))
+                                } }
+                                custom
+                            />
+                        </Form.Group>
+                    </Col>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => {

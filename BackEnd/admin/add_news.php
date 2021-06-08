@@ -55,7 +55,7 @@ if(!(int)$result){
 if($_FILES['ADD_PICTURES']){
     foreach($_FILES['ADD_PICTURES']['tmp_name'] as $sect => $val){
         $sourcePath = $val;
-        $type = end(explode(".",$_FILES['prop']['name'][$sect]));
+        $type = end(explode(".",$_FILES['ADD_PICTURES']['name'][$sect]));
         if($sourcePath!='' && $type){
             $dir = $_SERVER["DOCUMENT_ROOT"]."/BackEnd/include/img/news/".(int)$result."/";
             //Шифруем файл
@@ -68,7 +68,7 @@ if($_FILES['ADD_PICTURES']){
             }
 
             move_uploaded_file($sourcePath,$targetPath);
-            $res = $db->Add("elements", [
+            $res = $db->Add("properties", [
                 "PARENT_ID" => $result,
                 "NAME" => 'ADD_PICTURES',
                 "VALUE" => $targetPath
