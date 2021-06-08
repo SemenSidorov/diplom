@@ -28,6 +28,11 @@ if($_FILES['PREVIEW_PICTURE']){
         //Шифруем файл
         $fileName = hash("crc32",'BRV'.$dir."_PREVIEW_PICTURE").".".$type;
         $targetPath = $dir.$fileName;
+        try{
+            mkdir($dir,0755, true);
+        }catch(ErrorException $ex){
+            $er = $ex->getMessage();
+        }
 
         if(!move_uploaded_file($sourcePath,$targetPath)) die(json_encode(["ERROR" => "Ошибка добавления файла"]));
     }
@@ -56,6 +61,11 @@ if($_FILES['ADD_PICTURES']){
             //Шифруем файл
             $fileName = hash("crc32",'BRV'."_".$sect).".".$type;
             $targetPath = $dir.$fileName;
+            try{
+                mkdir($dir,0755, true);
+            }catch(ErrorException $ex){
+                $er = $ex->getMessage();
+            }
 
             move_uploaded_file($sourcePath,$targetPath);
             $res = $db->Add("elements", [
@@ -69,23 +79,4 @@ if($_FILES['ADD_PICTURES']){
         }
     }
 }
-
-// if(!empty($_FILES["ADD_PICTURES"])){
-//     foreach($_FILES["ADD_PICTURES"]["error"] as $key => $error){
-//         if(!$error && exif_imagetype($_FILES['ADD_PICTURES']['tmp_name'][$key])){
-//             $destination = $_SERVER['DOCUMENT_ROOT'] . '/BackEnd/include/img/news/' . $hash . $time . "/" . $_FILES["ADD_PICTURES"]["name"][$key];
-//             if(!rename($_FILES['ADD_PICTURES']['tmp_name'][$key], $destination)){
-//                 die(json_encode(["ERROR" => "Ошибка добавления файла"]));
-//             }
-//             $res = $db->Add("elements", [
-//                 "PARENT_ID" => $result,
-//                 "NAME" => 'ADD_PICTURES',
-//                 "VALUE" => $destination
-//             ]);
-//             if(!(int)$res){
-//                 die(json_encode($res));
-//             }
-//         }
-//     }
-// }
 echo json_encode(["NEWS_ID" => $result, "ERRORS" => $errors]);
