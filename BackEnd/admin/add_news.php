@@ -27,9 +27,8 @@ if($_FILES['PREVIEW_PICTURE']){
         $dir = $_SERVER["DOCUMENT_ROOT"]."/BackEnd/include/img/news/".(int)$result."/";
         //Шифруем файл
         $fileName = hash("crc32",'BRV'.$dir."_PREVIEW_PICTURE").".".$type;
-        mkdir($dir,0755, true);
         $targetPath = $dir.$fileName;
-        
+
         if(!move_uploaded_file($sourcePath,$targetPath)) die(json_encode(["ERROR" => "Ошибка добавления файла"]));
     }
 }
@@ -42,10 +41,10 @@ if($_FILES['PREVIEW_PICTURE']){
 // }
 
 $result = $db->Add("elements", [
-    "IBLOCK_ID" => 1, 
-    "NAME" => $name, 
-    "PREVIEW_PICTURE" => $targetPath, 
-    "PREVIEW_TEXT" => $preview_text, 
+    "IBLOCK_ID" => 1,
+    "NAME" => $name,
+    "PREVIEW_PICTURE" => $targetPath,
+    "PREVIEW_TEXT" => $preview_text,
     "DETAIL_TEXT" => $detail_text,
     "DATE_START" => $time,
     "DATE_EXP" => 0
@@ -63,13 +62,12 @@ if($_FILES['ADD_PICTURES']){
             $dir = $_SERVER["DOCUMENT_ROOT"]."/BackEnd/include/img/news/".(int)$result."/";
             //Шифруем файл
             $fileName = hash("crc32",'BRV'."_".$sect).".".$type;
-            mkdir($dir,0755, true);
             $targetPath = $dir.$fileName;
-            
+
             move_uploaded_file($sourcePath,$targetPath);
             $res = $db->Add("elements", [
-                "PARENT_ID" => $result, 
-                "NAME" => 'ADD_PICTURES', 
+                "PARENT_ID" => $result,
+                "NAME" => 'ADD_PICTURES',
                 "VALUE" => $targetPath
             ]);
             if(!(int)$res){
@@ -87,8 +85,8 @@ if($_FILES['ADD_PICTURES']){
 //                 die(json_encode(["ERROR" => "Ошибка добавления файла"]));
 //             }
 //             $res = $db->Add("elements", [
-//                 "PARENT_ID" => $result, 
-//                 "NAME" => 'ADD_PICTURES', 
+//                 "PARENT_ID" => $result,
+//                 "NAME" => 'ADD_PICTURES',
 //                 "VALUE" => $destination
 //             ]);
 //             if(!(int)$res){
