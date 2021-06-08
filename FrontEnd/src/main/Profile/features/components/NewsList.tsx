@@ -13,9 +13,11 @@ export interface NewI {
     NAME: string
     PREVIEW_PICTURE: string
     PREVIEW_TEXT: string
+    userId: string
+    token?: string
 }
 
-interface NewsListI {
+export interface NewsListI {
     count_news_all: string
     this_page: number
     values: Array<NewI>
@@ -53,6 +55,8 @@ const NewsList = () => {
                     !loading && data?.values?.map((el) => <New
                                                               NAME={el.NAME}
                                                               ID={el.ID}
+                                                              userId={userId}
+                                                              token={token}
                                                               PREVIEW_PICTURE={el.PREVIEW_PICTURE}
                                                               PREVIEW_TEXT={el.PREVIEW_TEXT}/> )
                     }
