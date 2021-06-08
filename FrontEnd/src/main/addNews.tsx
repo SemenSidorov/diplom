@@ -4,6 +4,7 @@ import {Button, Col, Form, Modal, Row} from "react-bootstrap";
 const initialNewData = {
     title: '',
     description: '',
+    previewText: '',
     files: [],
 }
 
@@ -42,7 +43,19 @@ const AddNews = ({userId,onAdd, header, show, handleClose, token }) => {
                                 </Form.Group>
                             </Col>
                             <Col md={12} xl={12} style={{margin: 'auto', background: '#fff', padding: 9, marginBottom: 5, borderRadius: 5}}>
-                                <div style={{textAlign: 'left', fontWeight: 400, marginBottom: 10}}>Описание</div>
+                                <div style={{textAlign: 'left', fontWeight: 400, marginBottom: 10}}>Краткое описание новости</div>
+                                <Form.Group className={'input-text'} style={{margin: 0, height: 'auto'}} controlId="formBasicEmail">
+                                    <Form.Control as="textarea"
+                                                  name='PREVIEW_TEXT'
+                                                  rows={4}
+                                                  value={newData.previewText}
+                                                  onChange={(e) => setNewData({...newData, previewText: e.target.value}) }
+                                                  placeholder="Введите краткое описание новости"
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={12} xl={12} style={{margin: 'auto', background: '#fff', padding: 9, marginBottom: 5, borderRadius: 5}}>
+                                <div style={{textAlign: 'left', fontWeight: 400, marginBottom: 10}}>Детальное описание новости</div>
                                 <Form.Group className={'input-text'} style={{margin: 0, height: 'auto'}} controlId="formBasicEmail">
                                     <Form.Control as="textarea"
                                                   name='DETAIL_TEXT'
@@ -54,6 +67,7 @@ const AddNews = ({userId,onAdd, header, show, handleClose, token }) => {
                                 </Form.Group>
                             </Col>
                             <Col md={12} xl={12} style={{margin: 'auto', background: '#fff', padding: 9, marginBottom: 5, borderRadius: 5}}>
+                                <div style={{textAlign: 'left', fontWeight: 400, marginBottom: 10}}>Картинка для отображения в ленте</div>
                                 <Form.Group>
                                     <Form.File
                                         type="file"
