@@ -17,9 +17,6 @@ const New = ({NAME, ID, PREVIEW_TEXT, PREVIEW_PICTURE}: NewI) => {
                     alt="First slide"
                 />
             </div>
-            <div style={{height: 45, padding: 10}}>
-                Лайки
-            </div>
         </div>
     );
 };

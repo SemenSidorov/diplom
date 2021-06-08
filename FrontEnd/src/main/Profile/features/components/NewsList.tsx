@@ -60,6 +60,7 @@ const NewsList = () => {
 
             </Container>
             <AddNews onAdd={() => run()} token={token} header={'Добавление новости'} userId={userId} show={showModal} handleClose={() => {
+                run();
                 setShowModal(false)
             }}/>
         </div>
