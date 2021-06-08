@@ -20,17 +20,23 @@ $date_start = strtotime($_POST["DATE_START"]);
 $date_exp = strtotime($_POST["DATE_EXT"]);
 $hash = hash('ripemd160', $name);
 
-if(!empty($_FILES["PREVIEW_PICTURE"]) && exif_imagetype($_FILES['PREVIEW_PICTURE']['tmp_name']) && $_FILES["PREVIEW_PICTURE"]["error"] === 0){
-    $destination = $_SERVER['DOCUMENT_ROOT'] . '/BackEnd/include/img/news/' . $hash . $time . "/" . $_FILES["PREVIEW_PICTURE"]["name"];
-    if(!rename($_FILES['PREVIEW_PICTURE']['tmp_name'], $destination)){
-        die(json_encode(["ERROR" => "Ошибка добавления файла"]));
+if($_FILES['PREVIEW_PICTURE']){
+    $sourcePath = $_FILES['PREVIEW_PICTURE']["tmp_name"];
+    $type = end(explode(".",$_FILES['PREVIEW_PICTURE']['name']));
+    if($sourcePath!='' && $type){
+        $dir = $_SERVER["DOCUMENT_ROOT"]."/BackEnd/include/img/news/".(int)$result."/";
+        //Шифруем файл
+        $fileName = hash("crc32",'BRV'.$dir."_PREVIEW_PICTURE").".".$type;
+        $targetPath = $dir.$fileName;
+
+        if(!move_uploaded_file($sourcePath,$targetPath)) die(json_encode(["ERROR" => "Ошибка добавления файла"]));
     }
 }
 
 $result = $db->Add("elements", [
     "IBLOCK_ID" => 2, 
     "NAME" => $name, 
-    "PREVIEW_PICTURE" => $destination, 
+    "PREVIEW_PICTURE" => $targetPath, 
     "PREVIEW_TEXT" => $preview_text, 
     "DETAIL_TEXT" => $detail_text,
     "DATE_START" => $date_start,

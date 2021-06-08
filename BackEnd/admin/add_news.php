@@ -33,13 +33,6 @@ if($_FILES['PREVIEW_PICTURE']){
     }
 }
 
-// if(!empty($_FILES["PREVIEW_PICTURE"]) && exif_imagetype($_FILES['PREVIEW_PICTURE']['tmp_name']) && $_FILES["PREVIEW_PICTURE"]["error"] === 0){
-//     $destination = $_SERVER['DOCUMENT_ROOT'] . '/BackEnd/include/img/news/' . $hash . $time . "/" . $_FILES["PREVIEW_PICTURE"]["name"];
-//     if(!rename($_FILES['PREVIEW_PICTURE']['tmp_name'], $destination)){
-//         die(json_encode(["ERROR" => "Ошибка добавления файла"]));
-//     }
-// }
-
 $result = $db->Add("elements", [
     "IBLOCK_ID" => 1,
     "NAME" => $name,
