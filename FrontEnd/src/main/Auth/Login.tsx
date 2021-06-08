@@ -23,11 +23,12 @@ const Login = () => {
 
     const auth = useCallback(async () => {
         const result = await fetch(`http://backend/BackEnd/personal/autoresize.php?LOGIN=${login}&PASSWORD=${password}`);
-        const res: {LOGIN: string, TOKEN: string, ID: string} = await result.json();
+        const res: {LOGIN: string, TOKEN: string, ID: string, IS_ADMIN: string} = await result.json();
         if (res.TOKEN) {
             console.log(res);
             document.cookie = `user_id=${res.ID}`;
             document.cookie = `access_token=${res.TOKEN}`;
+            document.cookie = `is_admin=${(res.IS_ADMIN === '1')}`;
             setIsAuth(true)
         }
     }, [login, password]);

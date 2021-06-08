@@ -29,7 +29,8 @@ const getNews = (userId: string, token: any): Promise<NewsListI> => {
 
 const NewsList = () => {
     const { userId } : UserTypes = useParams();
-    const token = getCookieByName('access_token')
+    const token = getCookieByName('access_token');
+    const isAdmin = getCookieByName('is_admin');
     const { data, loading, run } = useAsync<NewsListI>(() => getNews(userId, token) , []);
     const [showModal, setShowModal] = useState(false);
 
@@ -37,11 +38,13 @@ const NewsList = () => {
         <div style={{backgroundColor: '#ebedf0', height: "100%", width: "100%",  overflow: "auto"}}>
             <Container style={{display: 'flex', padding: 0, justifyContent: 'center'}}>
                 <Col xl={10} xs={12}>
-                    <SelectButton style={{ margin: '12px auto',width: 250, color: '#fff' }} onClick={() => {
-                        setShowModal(true)
-                    }}>
-                        Добавить новость
-                    </SelectButton>
+                    {
+                        isAdmin && <SelectButton style={{ margin: '12px auto',width: 250, color: '#fff' }} onClick={() => {
+                            setShowModal(true)
+                        }}>
+                            Добавить новость
+                        </SelectButton>
+                    }
                     {
                         loading && <div>
                             Загрузка...

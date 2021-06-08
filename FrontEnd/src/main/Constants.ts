@@ -2,6 +2,7 @@ export interface HeaderTypes {
     userId?: string
     title?: string,
     isAuth : boolean
+    isMain?: boolean
 }
 
 export interface UserTypes {
