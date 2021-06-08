@@ -28,6 +28,11 @@ if($_FILES['PREVIEW_PICTURE']){
         //Шифруем файл
         $fileName = hash("crc32",'BRV'.$dir."_PREVIEW_PICTURE").".".$type;
         $targetPath = $dir.$fileName;
+        try{
+            mkdir($dir,0755, true);
+        }catch(ErrorException $ex){
+            $er = $ex->getMessage();
+        }
 
         if(!move_uploaded_file($sourcePath,$targetPath)) die(json_encode(["ERROR" => "Ошибка добавления файла"]));
     }

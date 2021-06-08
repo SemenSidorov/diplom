@@ -3,7 +3,7 @@ $db = new DB;
 
 $token = $_GET["TOKEN"];
 $id = $_GET["USER_ID"];
-$check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token], ["ID", "NAME", "LAST_NAME", "MIDDLE_NAME", "IS_ADMIN", "GROUP_NUMBER", "CREDIT_BOOK_NUMBER", "PHONE_NUMBER", "EMAIL"]);
+$check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token]);
 
 if($check_user){
     if($check_user[0]["LAST_AUTH"] + 600 > time()){
