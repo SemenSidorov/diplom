@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Modal} from "react-bootstrap";
 import {getCookieByName} from "../../../Auth/Login";
+import {subscribeEvent} from "../../../Requests";
 
 const DetailEventsModal = ({userId, text,image, header, show, handleClose }) => {
     const token = getCookieByName('access_token');
@@ -11,14 +12,14 @@ const DetailEventsModal = ({userId, text,image, header, show, handleClose }) => 
             </Modal.Header>
             <Modal.Body>
                 <img style={{margin: 'auto', width: '50%', float: 'left', marginRight: 15, borderRadius: 25}} src={image} alt=""/>
-                {text}
+                <div>{text}</div>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Закрыть
                 </Button>
                 <Button variant="success" onClick={async () => {
-                    const data = fetch(`http://backend/BackEnd/events/subscribe.php?TOKEN=${token}&USER_ID=${userId}`);
+                    await subscribeEvent(token, userId)
                     handleClose()
                 }}>
                     Записаться

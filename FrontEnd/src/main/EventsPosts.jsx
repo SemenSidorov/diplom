@@ -1,5 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import Avatar from '../images/first.png';
+import React, {useCallback, useMemo, useState} from 'react';
 import styled from 'styled-components'
 import {useParams} from "react-router-dom";
 import { useAsync } from "@umijs/hooks";
@@ -7,19 +6,15 @@ import { useAsync } from "@umijs/hooks";
 import {
     addEventInitialModel,
     DATE_FILTER_KEYS,
-    DATE_FILTER_VALUES,
-    timeTabs,
 } from "./Constants";
 import useDatePicker from "./useDatePicker";
 import DetailEventsModal from "./Profile/features/components/DetailEventsModal";
 import {getCookieByName} from "./Auth/Login";
 import AddNewOrEvent from "./AddNewOrEvent";
+import {addEvent, getEvents,} from "./Requests";
+import DatePicker from "./DatePicker";
 
 
-//todo перенести в папку с методами
-const getEvents = (isMyEvents, dateFrom, dateTo ,userId, token) => {
-    return fetch(`http://backend/BackEnd/events/all.php?METHOD=${isMyEvents ? 'get_for_user' : ''}&TOKEN=${token}&DATE_START=${dateFrom}&DATE_EXP=${dateTo}&USER_ID=${userId}`).then(res => res.json());
-};
 
 const EventsPosts = ({isMyEvents = false}) => {
     const token = getCookieByName('access_token');
@@ -27,8 +22,6 @@ const EventsPosts = ({isMyEvents = false}) => {
     const [show, setShow] = useState(false);
     const [currentModalData, setCurrentModalData] = useState([]);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     const [dateFrom,
         dateTo,
@@ -36,6 +29,12 @@ const EventsPosts = ({isMyEvents = false}) => {
         onNextDateClick] = useDatePicker(activeDateTab, DATE_FILTER_KEYS);
 
     const [fields, setFields] = useState(addEventInitialModel);
+
+    const handleClose = () => {
+        setFields(addEventInitialModel)
+        setShow(false)
+    };
+    const handleShow = () => setShow(true);
 
 
     const currentDateInterval = useMemo(() => {
@@ -55,12 +54,24 @@ const EventsPosts = ({isMyEvents = false}) => {
     const isAdmin = getCookieByName('is_admin');
     const [showModal, setShowModal] = useState(false);
 
-    const { data, loading, run } = useAsync(() => getEvents(isMyEvents, dateFrom.format('DD-MM-YYYY'), dateTo.format('DD-MM-YYYY'), userId, token) , [dateFrom, dateTo]);
+    const { data, loading, run } = useAsync(() => getEvents(isMyEvents,
+                                                                dateFrom.format('DD-MM-YYYY'),
+                                                                dateTo.format('DD-MM-YYYY'),
+                                                                userId, token)
+        , [dateFrom, dateTo]);
 
     const onFieldsChange = useCallback((value, name) => {
         setFields(fields.map(el => el.name === name ? {...el, value: value} : {...el}))
     },[fields]);
 
+    const onSubmitAdd = useCallback(async (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const formData = new FormData(form);
+        await addEvent(formData);
+        await run();
+        setShowModal(false)
+    }, []);
     return (
         <div style={{
             borderRadius: 30,
@@ -71,42 +82,27 @@ const EventsPosts = ({isMyEvents = false}) => {
             color: '#fff'
         }}>
             {
-                isAdmin && <SelectButton style={{ margin: '12px auto',width: 250, color: '#fff' }} onClick={() => {
-                    setShowModal(true)
-                }}>
-                    Добавить мероприятие
-                </SelectButton>
+                isAdmin && (
+                    <SelectButton style={{ margin: '12px auto',width: 250, color: '#fff' }}
+                                  onClick={() => {
+                                    setShowModal(true)
+                                    }}>
+                        Добавить мероприятие
+                    </SelectButton>
+                )
             }
-    <SelectButtonContainer>
-        {
-            timeTabs.map(el => <SelectButton key={el.name}
-                                             onClick={() => setActiveDateTab(el.id)}
-                                             style={el.name !== DATE_FILTER_VALUES[activeDateTab]
-                                                 ? { backgroundColor: '#F0F2F4', color: '#000' }
-                                                 : {} }
-            >
-                {el.name}
-            </SelectButton>)
-        }
-    </SelectButtonContainer>
-    <DatePickerContainer currentWidth={currentDatePickerContainerWidth}>
-        <DatePickerClickBoxes isLeft onClick={onPrevDateClick}>
-            <img src="../../../Icons/webview-back.svg" alt=""/>
-        </DatePickerClickBoxes>
-        <div style={{
-            color: '#000',
-            fontWeight: 500,
-            padding: '5px 0px',
-        }}>
-            {currentDateInterval}
-        </div>
-        <DatePickerClickBoxes onClick={onNextDateClick}>
-            {/*<img style={} src/>*/}
-        </DatePickerClickBoxes>
-    </DatePickerContainer>
+            {/*setActiveDateTab, activeDateTab, currentDatePickerContainerWidth, onPrevDateClick, currentDateInterval, onNextDateClick*/}
+            <DatePicker setActiveDateTab={setActiveDateTab}
+                        activeDateTab={activeDateTab}
+                        currentDatePickerContainerWidth={currentDatePickerContainerWidth}
+                        onPrevDateClick={onPrevDateClick}
+                        currentDateInterval={currentDateInterval}
+                        onNextDateClick={onNextDateClick}
+            />
     {
         data?.length && data?.map(el => {
             return <div style={{
+                cursor: 'pointer',
                 height: 134,
                 borderRadius: 35,
                 backgroundImage: `url(${el.PREVIEW_PICTURE.replace('C:/OpenServer/domains/', 'http://')})`,
@@ -123,29 +119,19 @@ const EventsPosts = ({isMyEvents = false}) => {
             </div>
         })
     }
-            <AddNewOrEvent onSubmit={async (event) => {
-                event.preventDefault();
-                const form = event.currentTarget;
-                const formData = new FormData(form);
-                await fetch('http://backend/BackEnd/admin/add_events.php', {
-                        body: formData,
-                        method: "post",
-                    }
-                );
-                run();
-                setShowModal(false)
-            }}
-                           onFieldsChange={onFieldsChange}
-                           fields={fields}
-                           token={token}
-                           header={'Добавление новости'}
-                           userId={userId}
-                           show={showModal}
-                           handleClose={() => {
-                               // run();
-                               setShowModal(false)
-                           }}
-            />
+            {
+                showModal &&  <AddNewOrEvent onSubmit={onSubmitAdd}
+                                             onFieldsChange={onFieldsChange}
+                                             fields={fields}
+                                             token={token}
+                                             header={'Добавление новости'}
+                                             userId={userId}
+                                             show={showModal}
+                                             handleClose={() => {
+                                                 setShowModal(false)
+                                             }}
+                />
+            }
             {show &&  <DetailEventsModal userId={userId}
                                          image={currentModalData.PREVIEW_PICTURE.replace('C:/OpenServer/domains/', 'http://')}
                                          id={currentModalData?.ID}
@@ -158,36 +144,6 @@ const EventsPosts = ({isMyEvents = false}) => {
     );
 };
 
-
-export const DatePickerContainer = styled.div`
-     ${props => `display: flex;
-     width: ${props.currentWidth}px;
-     height: 35px; 
-     margin: auto;
-     border: 1px solid #D9D9D9;
-     border-radius: 10px; 
-     justify-content: space-between;
-     margin-top: 10px;`}
-`;
-
-export const DatePickerClickBoxes = styled.div`
- ${props => `
-    align-self: center;
-    color: black;
-    font-weight: 500;
-    cursor: pointer;
-    height: 100%;
-    padding: 6px 18.5px;
-    border-right: ${props.isLeft ? ' 1px solid #D9D9D9' : ''} ;
-    border-left: ${!props.isLeft ? '1px solid #D9D9D9' : ''}
-  `}
-`;
-export const SelectButtonContainer = styled.div`
-    align-self: center;
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-`;
 
 export const SelectButton = styled.div`
   background-color: #283593;

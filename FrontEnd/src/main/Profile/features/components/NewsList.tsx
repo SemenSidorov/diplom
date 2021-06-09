@@ -8,6 +8,7 @@ import {getCookieByName} from "../../../Auth/Login";
 import {SelectButton} from "../../../EventsPosts";
 import {ClockLoader} from "react-spinners";
 import AddNewOrEvent from "../../../AddNewOrEvent";
+import {addNew, getNews} from "../../../Requests";
 
 export interface NewI {
     ID: string
@@ -23,34 +24,32 @@ export interface NewsListI {
     this_page: number
     values: Array<NewI>
 }
-//todo перенести в папку с методами
-const getNews = (userId: string, token: any): Promise<NewsListI> => {
-    return fetch(`http://backend/BackEnd/news/news.php?TOKEN=${token}&PAGEN=1&USER_ID=${userId}`).then(res => res.json());
-};
 
 
 const NewsList = () => {
     const { userId } : UserTypes = useParams();
     const token = getCookieByName('access_token');
     const isAdmin = getCookieByName('is_admin');
+
     const { data, loading, run } = useAsync<NewsListI>(() => getNews(userId, token) , []);
     const [showModal, setShowModal] = useState(false);
+
     const [fields, setFields] = useState(addNewInitialModel);
 
     const onFieldsChange = useCallback((value, name) => {
         setFields(fields.map(el => el.name === name ? {...el, value: value} : {...el}))
     },[fields]);
 
+    const handleClose = useCallback(() => {
+        setShowModal(false)
+    }, []);
+
     const onSubmit = useCallback(async (event) => {
         event.preventDefault();
         const form = event.currentTarget;
         const formData = new FormData(form);
-        await fetch('http://backend/BackEnd/admin/add_news.php', {
-                body: formData,
-                method: "post",
-            }
-        );
-        run();
+        await addNew(formData);
+        await run();
         setShowModal(false)
     }, []);
 
@@ -88,20 +87,18 @@ const NewsList = () => {
                                                               PREVIEW_TEXT={el.PREVIEW_TEXT}/> )
                     }
                 </Col>
-
             </Container>
-            <AddNewOrEvent onSubmit={onSubmit}
-                           onFieldsChange={onFieldsChange}
-                           fields={fields}
-                           token={token}
-                           header={'Добавление новости'}
-                           userId={userId}
-                           show={showModal}
-                           handleClose={() => {
-                                run();
-                                setShowModal(false)
-                            }}
-            />
+            {
+                showModal && <AddNewOrEvent onSubmit={onSubmit}
+                                            onFieldsChange={onFieldsChange}
+                                            fields={fields}
+                                            token={token}
+                                            header={'Добавление новости'}
+                                            userId={userId}
+                                            show={showModal}
+                                            handleClose={handleClose}
+                />
+            }
         </div>
     );
 };
