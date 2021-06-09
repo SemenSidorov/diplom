@@ -20,8 +20,8 @@ if($_GET["DATE_START"] && $_GET["DATE_EXP"]){
     $filter["<=DATE_START"] = $date_exp;
     $filter1[">=DATE_EXP"] = $date_start;
     $filter1["<=DATE_EXP"] = $date_exp;
-    $filter2[">=DATE_START"] = $date_start;
-    $filter2["<=DATE_EXP"] = $date_exp;
+    $filter2["<=DATE_START"] = $date_start;
+    $filter2[">=DATE_EXP"] = $date_exp;
 }
 
 if($_GET["METHOD"] == "get_for_user"){
