@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import New from "./New";
-import {Col, Container} from "react-bootstrap";
+import {Col, Container, Form} from "react-bootstrap";
 import { useAsync } from "@umijs/hooks";
-import {UserTypes} from "../../../Constants";
+import {addNewInitialModel, UserTypes} from "../../../Constants";
 import {useParams} from "react-router-dom";
 import {getCookieByName} from "../../../Auth/Login";
 import {SelectButton, SelectButtonContainer} from "../../../EventsPosts";
 import AddNews from "../../../addNews";
+import {ClockLoader} from "react-spinners";
+import AddNewOrEvent from "../../../AddNewOrEvent";
 
 export interface NewI {
     ID: string
@@ -34,6 +36,25 @@ const NewsList = () => {
     const isAdmin = getCookieByName('is_admin');
     const { data, loading, run } = useAsync<NewsListI>(() => getNews(userId, token) , []);
     const [showModal, setShowModal] = useState(false);
+    const [fields, setFields] = useState(addNewInitialModel);
+
+    const onFieldsChange = useCallback((value, name) => {
+        setFields(fields.map(el => el.name === name ? {...el, value: value} : {...el}))
+    },[fields]);
+
+    const onSubmit = useCallback(async (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const formData = new FormData(form);
+        await fetch('http://backend/BackEnd/admin/add_news.php', {
+                body: formData,
+                method: "post",
+            }
+        );
+        run();
+        setShowModal(false)
+    }, []);
+
 
     return (
         <div style={{backgroundColor: '#ebedf0', height: "100%", width: "100%",  overflow: "auto"}}>
@@ -47,8 +68,15 @@ const NewsList = () => {
                         </SelectButton>
                     }
                     {
-                        loading && <div>
-                            Загрузка...
+                        data?.values?.length === 0 && <div style={{height: 350, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                            <div style={{display: 'flex', justifyContent: 'center', fontSize: 20, color: '#000', background: '#fff', width: '100%', height: 120, borderRadius: 10, alignItems: 'center' }}>
+                                Новостей нет
+                            </div>
+                        </div>
+                    }
+                    {
+                        loading && <div style={{height: 350, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                            <ClockLoader color={'#283593'} loading={loading} />
                         </div>
                     }
                     {
@@ -63,10 +91,18 @@ const NewsList = () => {
                 </Col>
 
             </Container>
-            <AddNews onAdd={() => run()} token={token} header={'Добавление новости'} userId={userId} show={showModal} handleClose={() => {
-                run();
-                setShowModal(false)
-            }}/>
+            <AddNewOrEvent onSubmit={onSubmit}
+                           onFieldsChange={onFieldsChange}
+                           fields={fields}
+                           token={token}
+                           header={'Добавление новости'}
+                           userId={userId}
+                           show={showModal}
+                           handleClose={() => {
+                                run();
+                                setShowModal(false)
+                            }}
+            />
         </div>
     );
 };

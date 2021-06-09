@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import {Col} from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
 import {UserTypes} from "./Constants";
+import {getCookieByName} from "./Auth/Login";
 
 const linkStyles = {
     fontSize: 15,
@@ -11,7 +12,7 @@ const linkStyles = {
 
 const NavPanel = () => {
     const isMobile = useMemo(() => window.screen.width < 1025, []);
-    const { userId } : UserTypes = useParams();
+    const userId : string | undefined = getCookieByName('user_id')
     return (
         !isMobile ? <Col md={3}>
             <div>

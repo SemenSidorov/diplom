@@ -8,6 +8,7 @@ import {DATE_FILTER_KEYS, DATE_FILTER_VALUES, timeTabs, UserTypes} from "./Const
 import useDatePicker from "./useDatePicker";
 import DetailEventsModal from "./Profile/features/components/DetailEventsModal";
 import {getCookieByName} from "./Auth/Login";
+import AddNews from "./addNews";
 
 
 //todo перенести в папку с методами
@@ -45,6 +46,8 @@ const EventsPosts = ({isMyEvents = false}) => {
     ), [activeDateTab, currentDateInterval]);
 
     const { userId } = useParams();
+    const isAdmin = getCookieByName('is_admin');
+    const [showModal, setShowModal] = useState(false);
 
     const { data, loading } = useAsync(() => getEvents(isMyEvents, dateFrom.format('DD-MM-YYYY'), dateTo.format('DD-MM-YYYY'), userId, token) , [dateFrom, dateTo]);
 
@@ -57,6 +60,13 @@ const EventsPosts = ({isMyEvents = false}) => {
             flexWrap: "wrap",
             color: '#fff'
         }}>
+            {
+                isAdmin && <SelectButton style={{ margin: '12px auto',width: 250, color: '#fff' }} onClick={() => {
+                    setShowModal(true)
+                }}>
+                    Добавить мероприятие
+                </SelectButton>
+            }
     <SelectButtonContainer>
         {
             timeTabs.map(el => <SelectButton key={el.name}
@@ -103,6 +113,12 @@ const EventsPosts = ({isMyEvents = false}) => {
             </div>
         })
     }
+    <AddNews onAdd={() => {
+        console.log('kol')
+    }} token={token} header={'Добавление мероприятие'} userId={userId} show={showModal} handleClose={() => {
+        console.log('lol');
+        setShowModal(false)
+    }}/>
     <DetailEventsModal userId={userId} id={currentModalData?.ID} text={currentModalData?.PREVIEW_TEXT} token={token} header={currentModalData?.NAME} show={show} handleClose={handleClose} />
 </div>
     );

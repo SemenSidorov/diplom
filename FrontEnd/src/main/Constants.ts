@@ -49,3 +49,40 @@ export const timeTabs = [
     },
 
 ];
+
+export const addNewInitialModel = [
+    {
+        title: 'Название новости',
+        name: 'NAME',
+        type: 'input',
+        value: '',
+    },
+    {
+        title: 'Краткое описание новости',
+        name: 'PREVIEW_TEXT',
+        type: 'textarea',
+        value: '',
+    },
+    {
+        title: 'Детальное описание новости',
+        name: 'DETAIL_TEXT',
+        type: 'textarea',
+        value: '',
+    },
+    {
+        title: 'Картинка для отображения в ленте',
+        name: 'PREVIEW_PICTURE',
+        type: 'file',
+        id: 'inputGroupFile01',
+        value: '',
+        multiple: false,
+    },
+    {
+        title: 'Картинки для детального отображения',
+        name: 'ADD_PICTURES[]',
+        id: 'inputGroupFile02',
+        type: 'file',
+        value: '',
+        multiple: true
+    }
+]
