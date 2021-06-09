@@ -29,7 +29,7 @@ if($_GET["METHOD"] == "get_for_user"){
     $filter["ID"] = $ar_events_id;
 }
 
-$result = $db->GetList('elements', $filter, ['ID', 'NAME', 'PREVIEW_PICTURE', 'PREVIEW_TEXT', 'DATE_START', 'DATE_EXP']);
+$result = $db->GetList('elements', $filter, ['ID', 'NAME', 'PREVIEW_PICTURE', 'DETAIL_TEXT', 'PREVIEW_TEXT', 'DATE_START', 'DATE_EXP']);
 foreach($result as $key => $res){
     $result[$key]["DATE_START_TIMESTAMP"] = $res["DATE_START"];
     $result[$key]["DATE_START"] = date("d-m-Y H:i:s", $res["DATE_START"]);

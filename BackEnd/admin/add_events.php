@@ -17,7 +17,7 @@ $name = $_POST["NAME"];
 $preview_text = $_POST["PREVIEW_TEXT"];
 $detail_text = $_POST["DETAIL_TEXT"];
 $date_start = strtotime($_POST["DATE_START"]);
-$date_exp = strtotime($_POST["DATE_EXT"]);
+$date_exp = strtotime($_POST["DATE_EXP"]);
 $hash = hash('ripemd160', $name);
 
 if($_FILES['PREVIEW_PICTURE']){
@@ -39,13 +39,13 @@ if($_FILES['PREVIEW_PICTURE']){
 }
 
 $result = $db->Add("elements", [
-    "IBLOCK_ID" => 2, 
-    "NAME" => $name, 
-    "PREVIEW_PICTURE" => $targetPath, 
-    "PREVIEW_TEXT" => $preview_text, 
+    "IBLOCK_ID" => 2,
+    "NAME" => $name,
+    "PREVIEW_PICTURE" => $targetPath,
+    "PREVIEW_TEXT" => $preview_text,
     "DETAIL_TEXT" => $detail_text,
     "DATE_START" => $date_start,
-    "DATE_EXT" => $date_exp
+    "DATE_EXP" => $date_exp
 ]);
 
 if(!(int)$result){

@@ -38,7 +38,6 @@ const EventsPosts = ({isMyEvents = false}) => {
     const [fields, setFields] = useState(addEventInitialModel);
 
 
-
     const currentDateInterval = useMemo(() => {
         if (activeDateTab === DATE_FILTER_KEYS.day) {
             return dateFrom.format('DD MMMM YYYY')
@@ -56,7 +55,7 @@ const EventsPosts = ({isMyEvents = false}) => {
     const isAdmin = getCookieByName('is_admin');
     const [showModal, setShowModal] = useState(false);
 
-    const { data, loading } = useAsync(() => getEvents(isMyEvents, dateFrom.format('DD-MM-YYYY'), dateTo.format('DD-MM-YYYY'), userId, token) , [dateFrom, dateTo]);
+    const { data, loading, run } = useAsync(() => getEvents(isMyEvents, dateFrom.format('DD-MM-YYYY'), dateTo.format('DD-MM-YYYY'), userId, token) , [dateFrom, dateTo]);
 
     const onFieldsChange = useCallback((value, name) => {
         setFields(fields.map(el => el.name === name ? {...el, value: value} : {...el}))
@@ -110,7 +109,7 @@ const EventsPosts = ({isMyEvents = false}) => {
             return <div style={{
                 height: 134,
                 borderRadius: 35,
-                backgroundImage: `url(${Avatar})`,
+                backgroundImage: `url(${el.PREVIEW_PICTURE.replace('C:/OpenServer/domains/', 'http://')})`,
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 marginTop: '10px'
@@ -124,8 +123,17 @@ const EventsPosts = ({isMyEvents = false}) => {
             </div>
         })
     }
-            <AddNewOrEvent onSubmit={() => {
-                console.log('lol')
+            <AddNewOrEvent onSubmit={async (event) => {
+                event.preventDefault();
+                const form = event.currentTarget;
+                const formData = new FormData(form);
+                await fetch('http://backend/BackEnd/admin/add_events.php', {
+                        body: formData,
+                        method: "post",
+                    }
+                );
+                run();
+                setShowModal(false)
             }}
                            onFieldsChange={onFieldsChange}
                            fields={fields}
@@ -138,7 +146,13 @@ const EventsPosts = ({isMyEvents = false}) => {
                                setShowModal(false)
                            }}
             />
-    <DetailEventsModal userId={userId} id={currentModalData?.ID} text={currentModalData?.PREVIEW_TEXT} token={token} header={currentModalData?.NAME} show={show} handleClose={handleClose} />
+    <DetailEventsModal userId={userId}
+                       id={currentModalData?.ID}
+                       text={currentModalData?.DETAIL_TEXT}
+                       token={token}
+                       header={currentModalData?.NAME}
+                       show={show}
+                       handleClose={handleClose} />
 </div>
     );
 };

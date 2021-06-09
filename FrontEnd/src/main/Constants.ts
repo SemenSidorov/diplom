@@ -107,9 +107,15 @@ export const addEventInitialModel = [
         value: '',
     },
     {
-        title: 'Дата мероприятия',
-        name: 'DETAIL_TEXT',
-        type: 'textarea',
+        title: 'Дата начала мероприятия',
+        name: 'DATE_START',
+        type: 'date',
+        value: '',
+    },
+    {
+        title: 'Дата окончания мероприятия',
+        name: 'DATE_EXP',
+        type: 'date',
         value: '',
     },
     {
