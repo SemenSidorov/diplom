@@ -133,7 +133,7 @@ const EventsPosts = ({isMyEvents = false}) => {
             }
             {show &&  <DetailEventsModal userId={userId}
                                          image={currentModalData.PREVIEW_PICTURE.replace('C:/OpenServer/domains/', 'http://')}
-                                         id={currentModalData?.ID}
+                                         eventId={currentModalData?.ID}
                                          text={currentModalData?.DETAIL_TEXT}
                                          token={token}
                                          header={currentModalData?.NAME}

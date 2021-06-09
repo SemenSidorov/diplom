@@ -13,8 +13,8 @@ export const addEvent = (formData) => {
     )
 };
 
-export const subscribeEvent = (token, userId) => {
-    return fetch(`http://backend/BackEnd/events/subscribe.php?TOKEN=${token}&USER_ID=${userId}`)
+export const subscribeEvent = (token, userId, eventId) => {
+    return fetch(`http://backend/BackEnd/events/subscribe.php?EVENT_ID=${eventId}&TOKEN=${token}&USER_ID=${userId}`)
 }
 
 
