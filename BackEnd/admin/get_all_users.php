@@ -2,7 +2,7 @@
 $db = new DB;
 $count_news = 10;
 $top_news = 0;
-$pagen = (int)$_GET["PAGEN"];<?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
+$pagen = (int)$_GET["PAGEN"];
 
 $token = $_POST["TOKEN"];
 $id = $_POST["USER_ID"];
