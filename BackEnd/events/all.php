@@ -20,6 +20,8 @@ if($_GET["DATE_START"] && $_GET["DATE_EXP"]){
     $filter["<=DATE_START"] = $date_exp;
     $filter1[">=DATE_EXP"] = $date_start;
     $filter1["<=DATE_EXP"] = $date_exp;
+    $filter2[">=DATE_START"] = $date_start;
+    $filter2["<=DATE_EXP"] = $date_exp;
 }
 
 if($_GET["METHOD"] == "get_for_user"){
@@ -30,6 +32,7 @@ if($_GET["METHOD"] == "get_for_user"){
     }
     $filter["ID"] = $ar_events_id;
     $filter1["ID"] = $ar_events_id;
+    $filter2["ID"] = $ar_events_id;
 }
 
 $arResult = [];
@@ -43,13 +46,22 @@ foreach($result as $key => $res){
     $arResult[$result[$key]["ID"]] = $result[$key];
 }
 
-$result1 = $db->GetList('elements', $filter1, ['ID', 'NAME', 'PREVIEW_PICTURE', 'DETAIL_TEXT', 'PREVIEW_TEXT', 'DATE_START', 'DATE_EXP']);
-foreach($result1 as $key => $res){
-    $result1[$key]["DATE_START_TIMESTAMP"] = $res["DATE_START"];
-    $result1[$key]["DATE_START"] = date("d-m-Y H:i:s", $res["DATE_START"]);
-    $result1[$key]["DATE_EXP_TIMESTAMP"] = $res["DATE_EXP"];
-    $result1[$key]["DATE_EXP"] = date("d-m-Y H:i:s", $res["DATE_EXP"]);
-    $arResult[$result1[$key]["ID"]] = $result1[$key];
+$result = $db->GetList('elements', $filter1, ['ID', 'NAME', 'PREVIEW_PICTURE', 'DETAIL_TEXT', 'PREVIEW_TEXT', 'DATE_START', 'DATE_EXP']);
+foreach($result as $key => $res){
+    $result[$key]["DATE_START_TIMESTAMP"] = $res["DATE_START"];
+    $result[$key]["DATE_START"] = date("d-m-Y H:i:s", $res["DATE_START"]);
+    $result[$key]["DATE_EXP_TIMESTAMP"] = $res["DATE_EXP"];
+    $result[$key]["DATE_EXP"] = date("d-m-Y H:i:s", $res["DATE_EXP"]);
+    $arResult[$result[$key]["ID"]] = $result[$key];
+}
+
+$result = $db->GetList('elements', $filter2, ['ID', 'NAME', 'PREVIEW_PICTURE', 'DETAIL_TEXT', 'PREVIEW_TEXT', 'DATE_START', 'DATE_EXP']);
+foreach($result as $key => $res){
+    $result[$key]["DATE_START_TIMESTAMP"] = $res["DATE_START"];
+    $result[$key]["DATE_START"] = date("d-m-Y H:i:s", $res["DATE_START"]);
+    $result[$key]["DATE_EXP_TIMESTAMP"] = $res["DATE_EXP"];
+    $result[$key]["DATE_EXP"] = date("d-m-Y H:i:s", $res["DATE_EXP"]);
+    $arResult[$result[$key]["ID"]] = $result[$key];
 }
 
 echo json_encode($arResult);
