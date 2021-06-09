@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {useParams} from "react-router-dom";
 import {menuTabs, TabsTypes, UserTypes} from "../Constants";
 import Header from "../Header/Header";
@@ -6,21 +6,15 @@ import MainProfileContainer from "./features/MainProfileContainer";
 import {useAsync} from "@umijs/hooks";
 import {getCookieByName} from "../Auth/Login";
 
-const getCurrentFields = (userId): Promise<any> => {
-    const token = getCookieByName('access_token');
-    return fetch(`http://backend/BackEnd/personal/registration.php?TOKEN=${token}&USER_ID=${userId}`).then(res => res.json());
-};
-
 const ProfileContainer = () => {
 
     const { userId } : UserTypes = useParams();
     const { currentTab }: TabsTypes = useParams();
-    const { data, loading } = useAsync(() => getCurrentFields(userId) , []);
+
+
 
     const getHeaderNameByCurrentTab = useMemo(() => {
         switch (Number(currentTab)) {
-            case menuTabs.MESSAGES:
-                return 'Сообщения';
             case menuTabs.NEWS:
                 return 'Новости';
             case menuTabs.EVENTS:

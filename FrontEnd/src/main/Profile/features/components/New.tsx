@@ -9,15 +9,16 @@ const New = ({NAME, ID,userId, token, PREVIEW_TEXT, PREVIEW_PICTURE}: NewI) => {
     const handleShow = () => setShow(true);
     return (
         <div style={{backgroundColor: "#FFF",width: '100%',marginTop: 20}}>
-            <div style={{display: 'flex'}}>
-                <div style={{textAlign: "left", padding: 10}}>
+            <div>
+                <div style={{display: 'flex', textAlign: "left", padding: 10, alignItems: 'center'}}>
                     {NAME}
-                    <br/>
+                    <SelectButton onClick={() => handleShow()} style={{ margin: '12px 12px 12px auto',width: 140, color: '#fff', height: 30, padding: 2 }}>
+                        Посмотреть
+                    </SelectButton>
+                </div>
+                <div style={{padding: 10}}>
                     {PREVIEW_TEXT}
                 </div>
-                <SelectButton onClick={() => handleShow()} style={{ margin: '12px 12px 12px auto',width: 140, color: '#fff', height: 30, padding: 2 }}>
-                    Посмотреть
-                </SelectButton>
             </div>
             <div style={{display: "flex",justifyContent: 'center',width: "100%"}}>
                 <img

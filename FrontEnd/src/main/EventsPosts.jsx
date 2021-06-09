@@ -17,7 +17,7 @@ const getEvents = (isMyEvents, dateFrom, dateTo ,userId, token) => {
 
 const EventsPosts = ({isMyEvents = false}) => {
     const token = getCookieByName('access_token');
-    const [activeDateTab, setActiveDateTab] = useState(DATE_FILTER_KEYS.day);
+    const [activeDateTab, setActiveDateTab] = useState(DATE_FILTER_KEYS.month);
     const [show, setShow] = useState(false);
     const [currentModalData, setCurrentModalData] = useState([]);
 

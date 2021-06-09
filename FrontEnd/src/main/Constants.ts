@@ -36,15 +36,16 @@ export const DATE_FILTER_VALUES = {
 
 export const timeTabs = [
     {
-        name: DATE_FILTER_VALUES[DATE_FILTER_KEYS.day],
-        id: DATE_FILTER_KEYS.day,
+        name: DATE_FILTER_VALUES[DATE_FILTER_KEYS.month],
+        id: DATE_FILTER_KEYS.month,
     },
     {
         name: DATE_FILTER_VALUES[DATE_FILTER_KEYS.weak],
         id: DATE_FILTER_KEYS.weak,
     },
     {
-        name: DATE_FILTER_VALUES[DATE_FILTER_KEYS.month],
-        id: DATE_FILTER_KEYS.month,
+        name: DATE_FILTER_VALUES[DATE_FILTER_KEYS.day],
+        id: DATE_FILTER_KEYS.day,
     },
+
 ];

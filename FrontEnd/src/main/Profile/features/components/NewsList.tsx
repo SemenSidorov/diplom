@@ -38,7 +38,7 @@ const NewsList = () => {
     return (
         <div style={{backgroundColor: '#ebedf0', height: "100%", width: "100%",  overflow: "auto"}}>
             <Container style={{display: 'flex', padding: 0, justifyContent: 'center'}}>
-                <Col xl={10} xs={12}>
+                <Col xl={12} xs={12}>
                     {
                         isAdmin && <SelectButton style={{ margin: '12px auto',width: 250, color: '#fff' }} onClick={() => {
                             setShowModal(true)

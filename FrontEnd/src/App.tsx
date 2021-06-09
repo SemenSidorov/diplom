@@ -4,15 +4,13 @@ import AppLayoutContainer from "./main/AppLayoutContainer";
 import { Switch, Route, withRouter } from 'react-router-dom'
 import AuthContainer from "./main/Auth/AuthContainer";
 import ProfileContainer from "./main/Profile/ProfileContainer";
-import Chat from "./main/Chat/Chat";
 
 function App() {
   return (
       <Switch>
         <Route exact path='/' render={() => <AppLayoutContainer/>}/>
         <Route exact path='/:isRegister' render={() => (<AuthContainer />)}/>
-        <Route exact path='/profile/:userId/messages' render={() => <Chat />}/>
-        <Route exact path='/profile/:userId/:currentTab' render={() => <ProfileContainer />}/>
+          <Route exact path='/profile/:userId/:currentTab' render={() => <ProfileContainer />}/>
       </Switch>
   );
 }

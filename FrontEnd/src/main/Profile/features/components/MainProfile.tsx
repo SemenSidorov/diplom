@@ -3,9 +3,19 @@ import {mainProfileContainerInterface} from "../MainProfileContainer";
 import {Col} from "react-bootstrap";
 import Avatar from '../../../../images/first.png';
 import EventsPosts from "../../../EventsPosts";
+import {useAsync} from "@umijs/hooks";
+import {getCookieByName} from "../../../Auth/Login";
+import {UserTypes} from "../../../Constants";
+import {useParams} from "react-router-dom";
+
+const getCurrentFields = (userId): Promise<any> => {
+    const token = getCookieByName('access_token');
+    return fetch(`http://backend/BackEnd/personal/get_user_fields.php?&TOKEN=${token}&USER_ID=${userId}`).then(res => res.json());
+};
 
 const MainProfile = ({currentTab}: mainProfileContainerInterface) => {
-
+    const { userId } : UserTypes = useParams();
+    const { data, loading, run } = useAsync(() => getCurrentFields(userId) , []);
     return (
         <div style={{ padding: 10, width: '100%' }}>
             <Col style={{
@@ -16,7 +26,7 @@ const MainProfile = ({currentTab}: mainProfileContainerInterface) => {
                     <img width={'100%'} height={'100%'} style={{borderRadius: 45}} src={Avatar} alt=""/>
                     <div style={{marginLeft: 15, alignSelf: 'center'}}>
                         <div style={{width: 200, height: 19, fontWeight: 500}}>
-                            Герман Слаутин
+                            {`${data?.NAME} ${data?.LAST_NAME}`}
                         </div>
                         <div>
                             Статус...
