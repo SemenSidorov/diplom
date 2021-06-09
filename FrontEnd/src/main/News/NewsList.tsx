@@ -2,13 +2,13 @@ import React, {useCallback, useState} from 'react';
 import New from "./New";
 import {Col, Container, Form} from "react-bootstrap";
 import { useAsync } from "@umijs/hooks";
-import {addNewInitialModel, UserTypes} from "../../../Constants";
+import {addNewInitialModel, UserTypes} from "../Constants";
 import {useParams} from "react-router-dom";
-import {getCookieByName} from "../../../Auth/Login";
-import {SelectButton} from "../../../EventsPosts";
+import {getCookieByName} from "../Auth/Login";
+import {SelectButton} from "../Events/EventsPosts";
 import {ClockLoader} from "react-spinners";
-import AddNewOrEvent from "../../../AddNewOrEvent";
-import {addNew, getNews} from "../../../Requests";
+import AddNewOrEvent from "../AddNewOrEvent";
+import {addNew, getNews} from "../Requests";
 
 export interface NewI {
     ID: string

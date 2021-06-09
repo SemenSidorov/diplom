@@ -1,7 +1,7 @@
 import React from 'react';
 import {DATE_FILTER_VALUES, timeTabs} from "./Constants";
 import styled from "styled-components";
-import {SelectButton} from "./EventsPosts";
+import {SelectButton} from "./Events/EventsPosts";
 
 const DatePicker = ({setActiveDateTab, activeDateTab, currentDatePickerContainerWidth, onPrevDateClick, currentDateInterval, onNextDateClick}) => {
     return (

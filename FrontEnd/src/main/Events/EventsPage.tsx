@@ -1,5 +1,5 @@
 import React from 'react';
-import EventsPosts from "../../../EventsPosts";
+import EventsPosts from "./EventsPosts";
 import Col from "react-bootstrap/Col";
 
 const EventsPage = () => {

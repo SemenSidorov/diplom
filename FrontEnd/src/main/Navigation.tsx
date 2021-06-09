@@ -23,6 +23,9 @@ const NavPanel = () => {
                     <Link style={linkStyles} to={`/profile/${userId}/1`}>
                         Новости
                     </Link>
+                    <Link style={linkStyles} to={`/profile/${userId}/5`}>
+                        Все пользователи
+                    </Link>
                     <Link style={linkStyles} to={`/profile/${userId}/2`}>
                         Все мероприятия
                     </Link>

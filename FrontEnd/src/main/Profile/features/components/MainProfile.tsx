@@ -2,7 +2,7 @@ import React from 'react';
 import {mainProfileContainerInterface} from "../MainProfileContainer";
 import {Col} from "react-bootstrap";
 import Avatar from '../../../../images/first.png';
-import EventsPosts from "../../../EventsPosts";
+import EventsPosts from "../../../Events/EventsPosts";
 import {useAsync} from "@umijs/hooks";
 import {getCookieByName} from "../../../Auth/Login";
 import {UserTypes} from "../../../Constants";

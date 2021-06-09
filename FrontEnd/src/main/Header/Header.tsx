@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import settings from '../../images/settings.png'
 import {HeaderTypes} from "../Constants";
 import logo from '../../images/logo.png'
-import {SelectButton} from "../EventsPosts";
+import {SelectButton} from "../Events/EventsPosts";
 
 
 const Header = ({title,isAuth = false, isMain = false}: HeaderTypes) => {

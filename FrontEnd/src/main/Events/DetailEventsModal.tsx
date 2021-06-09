@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Modal} from "react-bootstrap";
-import {getCookieByName} from "../../../Auth/Login";
-import {subscribeEvent} from "../../../Requests";
+import {getCookieByName} from "../Auth/Login";
+import {subscribeEvent} from "../Requests";
 
 const DetailEventsModal = ({userId, text,image, header, show, handleClose }) => {
     const token = getCookieByName('access_token');

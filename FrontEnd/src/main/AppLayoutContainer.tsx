@@ -2,7 +2,7 @@ import React from 'react';
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import {Container} from "react-bootstrap";
-import NewsList from "./Profile/features/components/NewsList";
+import NewsList from "./News/NewsList";
 
 
 const AppLayoutContainer = () => {

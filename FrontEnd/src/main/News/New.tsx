@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {NewI} from "./NewsList";
-import {SelectButton} from "../../../EventsPosts";
+import {SelectButton} from "../Events/EventsPosts";
 import DetailNewModal from "./DetailNewModal";
 
 const New = ({NAME, ID,userId, token, PREVIEW_TEXT, PREVIEW_PICTURE}: NewI) => {

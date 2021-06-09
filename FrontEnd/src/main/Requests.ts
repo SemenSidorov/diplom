@@ -1,5 +1,5 @@
 // Мероприятия
-import {NewsListI} from "./Profile/features/components/NewsList";
+import {NewsListI} from "./News/NewsList";
 
 export const getEvents = (isMyEvents, dateFrom, dateTo , userId, token) => {
     return fetch(`http://backend/BackEnd/events/all.php?METHOD=${isMyEvents ? 'get_for_user' : ''}&TOKEN=${token}&DATE_START=${dateFrom}&DATE_EXP=${dateTo}&USER_ID=${userId}`).then(res => res.json());

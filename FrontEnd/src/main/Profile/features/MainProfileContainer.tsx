@@ -2,8 +2,8 @@ import React, {useMemo} from 'react';
 import MainProfile from "./components/MainProfile";
 import Footer from "../../Footer/Footer";
 import {menuTabs} from "../../Constants";
-import NewsList from "./components/NewsList";
-import EventsPage from "./components/EventsPage";
+import NewsList from "../../News/NewsList";
+import EventsPage from "../../Events/EventsPage";
 import {Col, Container} from "react-bootstrap";
 import NavPanel from "../../Navigation";
 

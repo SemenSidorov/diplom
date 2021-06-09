@@ -6,13 +6,13 @@ import { useAsync } from "@umijs/hooks";
 import {
     addEventInitialModel,
     DATE_FILTER_KEYS,
-} from "./Constants";
-import useDatePicker from "./useDatePicker";
-import DetailEventsModal from "./Profile/features/components/DetailEventsModal";
-import {getCookieByName} from "./Auth/Login";
-import AddNewOrEvent from "./AddNewOrEvent";
-import {addEvent, getEvents,} from "./Requests";
-import DatePicker from "./DatePicker";
+} from "../Constants";
+import useDatePicker from "../useDatePicker";
+import DetailEventsModal from "./DetailEventsModal";
+import {getCookieByName} from "../Auth/Login";
+import AddNewOrEvent from "../AddNewOrEvent";
+import {addEvent, getEvents,} from "../Requests";
+import DatePicker from "../DatePicker";
 
 
 
