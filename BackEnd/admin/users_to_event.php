@@ -4,8 +4,8 @@ $count_news = 10;
 $top_news = 0;
 $pagen = (int)$_GET["PAGEN"];<?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 
-$token = $_POST["TOKEN"];
-$id = $_POST["USER_ID"];
+$token = $_GET["TOKEN"];
+$id = $_GET["USER_ID"];
 $check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token], ["ID", "IS_ADMIN", "LAST_AUTH"]);
 
 if($check_user){
