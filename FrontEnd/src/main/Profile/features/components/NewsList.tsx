@@ -5,8 +5,7 @@ import { useAsync } from "@umijs/hooks";
 import {addNewInitialModel, UserTypes} from "../../../Constants";
 import {useParams} from "react-router-dom";
 import {getCookieByName} from "../../../Auth/Login";
-import {SelectButton, SelectButtonContainer} from "../../../EventsPosts";
-import AddNews from "../../../addNews";
+import {SelectButton} from "../../../EventsPosts";
 import {ClockLoader} from "react-spinners";
 import AddNewOrEvent from "../../../AddNewOrEvent";
 

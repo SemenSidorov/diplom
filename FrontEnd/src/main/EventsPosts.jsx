@@ -1,14 +1,19 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Avatar from '../images/first.png';
 import styled from 'styled-components'
 import {useParams} from "react-router-dom";
 import { useAsync } from "@umijs/hooks";
 
-import {DATE_FILTER_KEYS, DATE_FILTER_VALUES, timeTabs, UserTypes} from "./Constants";
+import {
+    addEventInitialModel,
+    DATE_FILTER_KEYS,
+    DATE_FILTER_VALUES,
+    timeTabs,
+} from "./Constants";
 import useDatePicker from "./useDatePicker";
 import DetailEventsModal from "./Profile/features/components/DetailEventsModal";
 import {getCookieByName} from "./Auth/Login";
-import AddNews from "./addNews";
+import AddNewOrEvent from "./AddNewOrEvent";
 
 
 //todo перенести в папку с методами
@@ -30,6 +35,8 @@ const EventsPosts = ({isMyEvents = false}) => {
         onPrevDateClick,
         onNextDateClick] = useDatePicker(activeDateTab, DATE_FILTER_KEYS);
 
+    const [fields, setFields] = useState(addEventInitialModel);
+
 
 
     const currentDateInterval = useMemo(() => {
@@ -50,6 +57,10 @@ const EventsPosts = ({isMyEvents = false}) => {
     const [showModal, setShowModal] = useState(false);
 
     const { data, loading } = useAsync(() => getEvents(isMyEvents, dateFrom.format('DD-MM-YYYY'), dateTo.format('DD-MM-YYYY'), userId, token) , [dateFrom, dateTo]);
+
+    const onFieldsChange = useCallback((value, name) => {
+        setFields(fields.map(el => el.name === name ? {...el, value: value} : {...el}))
+    },[fields]);
 
     return (
         <div style={{
@@ -113,12 +124,20 @@ const EventsPosts = ({isMyEvents = false}) => {
             </div>
         })
     }
-    <AddNews onAdd={() => {
-        console.log('kol')
-    }} token={token} header={'Добавление мероприятие'} userId={userId} show={showModal} handleClose={() => {
-        console.log('lol');
-        setShowModal(false)
-    }}/>
+            <AddNewOrEvent onSubmit={() => {
+                console.log('lol')
+            }}
+                           onFieldsChange={onFieldsChange}
+                           fields={fields}
+                           token={token}
+                           header={'Добавление новости'}
+                           userId={userId}
+                           show={showModal}
+                           handleClose={() => {
+                               // run();
+                               setShowModal(false)
+                           }}
+            />
     <DetailEventsModal userId={userId} id={currentModalData?.ID} text={currentModalData?.PREVIEW_TEXT} token={token} header={currentModalData?.NAME} show={show} handleClose={handleClose} />
 </div>
     );

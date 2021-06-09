@@ -85,4 +85,40 @@ export const addNewInitialModel = [
         value: '',
         multiple: true
     }
-]
+];
+
+export const addEventInitialModel = [
+    {
+        title: 'Название мероприятия',
+        name: 'NAME',
+        type: 'input',
+        value: '',
+    },
+    {
+        title: 'Краткое описание мероприятия',
+        name: 'PREVIEW_TEXT',
+        type: 'textarea',
+        value: '',
+    },
+    {
+        title: 'Детальное описание мероприятия',
+        name: 'DETAIL_TEXT',
+        type: 'textarea',
+        value: '',
+    },
+    {
+        title: 'Дата мероприятия',
+        name: 'DETAIL_TEXT',
+        type: 'textarea',
+        value: '',
+    },
+    {
+        title: 'Картинка для отображения в ленте',
+        name: 'PREVIEW_PICTURE',
+        type: 'file',
+        id: 'inputGroupFile01',
+        value: '',
+        multiple: false,
+    },
+];
+
