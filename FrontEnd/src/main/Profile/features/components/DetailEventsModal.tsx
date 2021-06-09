@@ -1,9 +1,8 @@
 import React from 'react';
 import {Button, Modal} from "react-bootstrap";
-import Avatar from '../../../../images/first.png';
 import {getCookieByName} from "../../../Auth/Login";
 
-const DetailEventsModal = ({userId, text, header, show, handleClose }) => {
+const DetailEventsModal = ({userId, text,image, header, show, handleClose }) => {
     const token = getCookieByName('access_token');
     return (
         <Modal show={show} onHide={handleClose}>
@@ -11,7 +10,7 @@ const DetailEventsModal = ({userId, text, header, show, handleClose }) => {
                 <Modal.Title>{header}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <img style={{margin: 'auto', width: '50%', float: 'left', marginRight: 15, borderRadius: 25}} src={Avatar} alt=""/>
+                <img style={{margin: 'auto', width: '50%', float: 'left', marginRight: 15, borderRadius: 25}} src={image} alt=""/>
                 {text}
             </Modal.Body>
             <Modal.Footer>

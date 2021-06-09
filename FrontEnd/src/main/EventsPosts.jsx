@@ -146,13 +146,14 @@ const EventsPosts = ({isMyEvents = false}) => {
                                setShowModal(false)
                            }}
             />
-    <DetailEventsModal userId={userId}
-                       id={currentModalData?.ID}
-                       text={currentModalData?.DETAIL_TEXT}
-                       token={token}
-                       header={currentModalData?.NAME}
-                       show={show}
-                       handleClose={handleClose} />
+            {show &&  <DetailEventsModal userId={userId}
+                                         image={currentModalData.PREVIEW_PICTURE.replace('C:/OpenServer/domains/', 'http://')}
+                                         id={currentModalData?.ID}
+                                         text={currentModalData?.DETAIL_TEXT}
+                                         token={token}
+                                         header={currentModalData?.NAME}
+                                         show={show}
+                                         handleClose={handleClose} />}
 </div>
     );
 };
