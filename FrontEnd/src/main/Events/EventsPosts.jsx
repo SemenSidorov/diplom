@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import styled from 'styled-components'
 import {useParams} from "react-router-dom";
 import { useAsync } from "@umijs/hooks";
@@ -55,8 +55,8 @@ const EventsPosts = ({isMyEvents = false}) => {
     const [showModal, setShowModal] = useState(false);
 
     const { data, loading, run } = useAsync(() => getEvents(isMyEvents,
-                                                                dateFrom.format('DD-MM-YYYY'),
-                                                                dateTo.format('DD-MM-YYYY'),
+                                                                dateFrom.format('DD-MM-YYYY 00:00:00'),
+                                                                dateTo.format('DD-MM-YYYY 23:59:59'),
                                                                 userId, token)
         , [dateFrom, dateTo]);
 
@@ -91,7 +91,6 @@ const EventsPosts = ({isMyEvents = false}) => {
                     </SelectButton>
                 )
             }
-            {/*setActiveDateTab, activeDateTab, currentDatePickerContainerWidth, onPrevDateClick, currentDateInterval, onNextDateClick*/}
             <DatePicker setActiveDateTab={setActiveDateTab}
                         activeDateTab={activeDateTab}
                         currentDatePickerContainerWidth={currentDatePickerContainerWidth}
@@ -100,7 +99,7 @@ const EventsPosts = ({isMyEvents = false}) => {
                         onNextDateClick={onNextDateClick}
             />
     {
-        data?.length && data?.map(el => {
+        data && Object.values(data)?.map(el => {
             return <div style={{
                 cursor: 'pointer',
                 height: 134,
@@ -134,7 +133,7 @@ const EventsPosts = ({isMyEvents = false}) => {
             }
             {show &&  <DetailEventsModal userId={userId}
                                          image={currentModalData.PREVIEW_PICTURE.replace('C:/OpenServer/domains/', 'http://')}
-                                         id={currentModalData?.ID}
+                                         eventId={currentModalData?.ID}
                                          text={currentModalData?.DETAIL_TEXT}
                                          token={token}
                                          header={currentModalData?.NAME}

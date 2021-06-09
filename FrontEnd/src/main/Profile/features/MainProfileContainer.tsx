@@ -6,6 +6,7 @@ import NewsList from "../../News/NewsList";
 import EventsPage from "../../Events/EventsPage";
 import {Col, Container} from "react-bootstrap";
 import NavPanel from "../../Navigation";
+import AllUsers from "../../AllUsers";
 
 export interface mainProfileContainerInterface {
     currentTab: number
@@ -19,6 +20,8 @@ const MainProfileContainer = ({currentTab}: mainProfileContainerInterface) => {
                 return <NewsList />;
             case menuTabs.EVENTS:
                 return <EventsPage />;
+            case menuTabs.ALL_USERS:
+                return <AllUsers />
             case menuTabs.EDIT:
                 return <Col md={9}>Редактирование страницы</Col>
             case menuTabs.PROFILE:

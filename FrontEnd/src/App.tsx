@@ -10,7 +10,7 @@ function App() {
       <Switch>
         <Route exact path='/' render={() => <AppLayoutContainer/>}/>
         <Route exact path='/:isRegister' render={() => (<AuthContainer />)}/>
-          <Route exact path='/profile/:userId/:currentTab' render={() => <ProfileContainer />}/>
+        <Route exact path='/profile/:userId/:currentTab' render={() => <ProfileContainer />}/>
       </Switch>
   );
 }

@@ -3,7 +3,7 @@ import {Button, Modal} from "react-bootstrap";
 import {getCookieByName} from "../Auth/Login";
 import {subscribeEvent} from "../Requests";
 
-const DetailEventsModal = ({userId, text,image, header, show, handleClose }) => {
+const DetailEventsModal = ({userId, text,image, header, show, handleClose, eventId }) => {
     const token = getCookieByName('access_token');
     return (
         <Modal show={show} onHide={handleClose}>
@@ -19,7 +19,7 @@ const DetailEventsModal = ({userId, text,image, header, show, handleClose }) => 
                     Закрыть
                 </Button>
                 <Button variant="success" onClick={async () => {
-                    await subscribeEvent(token, userId)
+                    await subscribeEvent(token, userId, eventId);
                     handleClose()
                 }}>
                     Записаться

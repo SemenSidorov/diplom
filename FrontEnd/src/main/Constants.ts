@@ -19,6 +19,7 @@ export const menuTabs = {
     EVENTS: 2,
     PROFILE: 3,
     EDIT: 4,
+    ALL_USERS: 5
 }
 
 export const DATE_FILTER_KEYS = {
