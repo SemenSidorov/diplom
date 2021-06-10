@@ -18,7 +18,6 @@ $news_id = $_POST["NEWS_ID"];
 $name = $_POST["NAME"];
 $preview_text = $_POST["PREVIEW_TEXT"];
 $detail_text = $_POST["DETAIL_TEXT"];
-$time = time();
 
 if($_FILES['PREVIEW_PICTURE']){
     $sourcePath = $_FILES['PREVIEW_PICTURE']["tmp_name"];
@@ -38,42 +37,49 @@ if($_FILES['PREVIEW_PICTURE']){
     }
 }
 
-$result = $db->Add("elements", [
-    "NAME" => $name,
-    "PREVIEW_PICTURE" => $targetPath,
-    "PREVIEW_TEXT" => $preview_text,
-    "DETAIL_TEXT" => $detail_text,
-]);
+$arFields = [];
+if($name) $arFields["NAME"] = $name;
+if($targetPath) $arFields["PREVIEW_PICTURE"] = $targetPath;
+if($preview_text) $arFields["PREVIEW_TEXT"] = $preview_text;
+if($detail_text) $arFields["DETAIL_TEXT"] = $detail_text;
 
-if(!(int)$result){
-    die(json_encode($result));
-}
+if($arFields){
+    $result = $db->Update("elements", $news_id, $arFields);
 
-if($_FILES['ADD_PICTURES']){
-    foreach($_FILES['ADD_PICTURES']['tmp_name'] as $sect => $val){
-        $sourcePath = $val;
-        $type = end(explode(".",$_FILES['ADD_PICTURES']['name'][$sect]));
-        if($sourcePath!='' && $type){
-            $dir = $_SERVER["DOCUMENT_ROOT"]."/BackEnd/include/img/news/".(int)$result."/";
-            //Шифруем файл
-            $fileName = hash("crc32",'BRV'.time()."_".$sect).".".$type;
-            $targetPath = $dir.$fileName;
-            try{
-                mkdir($dir,0755, true);
-            }catch(ErrorException $ex){
-                $er = $ex->getMessage();
-            }
+    if(!(int)$result){
+        die(json_encode($result));
+    }
 
-            move_uploaded_file($sourcePath,$targetPath);
-            $res = $db->Add("properties", [
-                "PARENT_ID" => $result,
-                "NAME" => 'ADD_PICTURES',
-                "VALUE" => $targetPath
-            ]);
-            if(!(int)$res){
-                $errors[json_encode($res)];
+    if($_FILES['ADD_PICTURES']){
+        $add_pics_in_new = $db->GetList('properties', ["NAME" => 'ADD_PICTURES', "PARENT_ID" => $news_id]);
+        foreach($add_pics_in_new as $apin_id){
+            $db->Remove('properties', $apin_id["ID"]);
+        }
+        foreach($_FILES['ADD_PICTURES']['tmp_name'] as $sect => $val){
+            $sourcePath = $val;
+            $type = end(explode(".",$_FILES['ADD_PICTURES']['name'][$sect]));
+            if($sourcePath!='' && $type){
+                $dir = $_SERVER["DOCUMENT_ROOT"]."/BackEnd/include/img/news/".(int)$result."/";
+                //Шифруем файл
+                $fileName = hash("crc32",'BRV'.time()."_".$sect).".".$type;
+                $targetPath = $dir.$fileName;
+                try{
+                    mkdir($dir,0755, true);
+                }catch(ErrorException $ex){
+                    $er = $ex->getMessage();
+                }
+
+                move_uploaded_file($sourcePath,$targetPath);
+                $res = $db->Add("properties", [
+                    "PARENT_ID" => $result,
+                    "NAME" => 'ADD_PICTURES',
+                    "VALUE" => $targetPath
+                ]);
+                if(!(int)$res){
+                    $errors[json_encode($res)];
+                }
             }
         }
     }
+    echo json_encode(["NEWS_ID" => $result, "ERRORS" => $errors]);
 }
-echo json_encode(["NEWS_ID" => $result, "ERRORS" => $errors]);
