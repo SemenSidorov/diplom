@@ -23,7 +23,7 @@ const DetailNewModal = ({show, handleClose,userId, token, header,text, id, previ
                     </div> : <div>
                                 <Carousel >
                                     {
-                                        data?.ADD_PICTURES.map(el => <Carousel.Item key={el?.VALUE}>
+                                        data?.ADD_PICTURES?.map(el => <Carousel.Item key={el?.VALUE}>
                                                 <img
                                                     className="d-block w-100"
                                                     src={el?.VALUE?.replace('C:/OpenServer/domains/', 'http://')}
