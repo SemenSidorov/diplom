@@ -19,7 +19,7 @@ const AllUsers = () => {
                 <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
                     <Col xs={12} style={{textAlign: 'center', height: 100, padding: 15}}>Список Пользователей</Col>
                     {
-                        data?.values.map(el =>  <div>
+                        data?.values?.map(el =>  <div>
                             <Col xs={12} style={{
                                 cursor: 'pointer',
                                 border: '1px solid #dce1e6',

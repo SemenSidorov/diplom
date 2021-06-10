@@ -74,6 +74,7 @@ const EventsPosts = ({isMyEvents = false}) => {
     }, []);
     return (
         <div style={{
+            background: '#fff',
             borderRadius: 30,
             textAlign: 'center',
             display: 'flex',

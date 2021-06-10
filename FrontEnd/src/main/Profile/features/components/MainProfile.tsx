@@ -6,7 +6,7 @@ import EventsPosts from "../../../Events/EventsPosts";
 import {useAsync} from "@umijs/hooks";
 import {getCookieByName} from "../../../Auth/Login";
 import {UserTypes} from "../../../Constants";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 const getCurrentFields = (userId): Promise<any> => {
     const token = getCookieByName('access_token');
@@ -19,6 +19,7 @@ const MainProfile = ({currentTab}: mainProfileContainerInterface) => {
     return (
         <div style={{ padding: 10, width: '100%' }}>
             <Col style={{
+                backgroundColor: '#fff',
                 padding: 15,
                 borderRadius: 15
             }}>
@@ -33,16 +34,18 @@ const MainProfile = ({currentTab}: mainProfileContainerInterface) => {
                         </div>
                     </div>
                 </div>
-                <div style={{
-                    backgroundColor: 'rgba(227, 227, 227, 0.8)',
-                    padding: 10, textAlign: 'center',
-                    borderRadius: '15px',
-                    marginTop: 20,
-                    fontSize: 15,
-                    fontWeight: 500
-                }}>
-                    Редактировать страницу
-                </div>
+                <Link to={`/profile/${userId}/4`}>
+                    <div style={{
+                        backgroundColor: 'rgba(227, 227, 227, 0.8)',
+                        padding: 10, textAlign: 'center',
+                        borderRadius: '15px',
+                        marginTop: 20,
+                        fontSize: 15,
+                        fontWeight: 500
+                    }}>
+                        Редактировать страницу
+                    </div>
+                </Link>
                 <div style={{fontWeight: 600, fontSize: 16, textAlign: 'center', marginTop: 25 }}>
                     Мои мероприятия
                 </div>
