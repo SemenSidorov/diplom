@@ -3,11 +3,11 @@ import {Button, Col, Container, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import { Redirect } from 'react-router'
 //todo перенести в utils
-export const getCookieByName = (name) => {
+export const getCookieByName = (name) : string => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    // @ts-ignore
-    if (parts.length === 2) return parts.pop().split(';').shift();
+    if (parts.length === 2) return parts?.pop()?.split(';').shift() || '';
+    return ''
 }
 
 const Login = () => {
@@ -24,11 +24,12 @@ const Login = () => {
     const auth = useCallback(async () => {
         const result = await fetch(`http://backend/BackEnd/personal/autoresize.php?LOGIN=${login}&PASSWORD=${password}`);
         const res: {LOGIN: string, TOKEN: string, ID: string, IS_ADMIN: string} = await result.json();
+        
         if (res.TOKEN) {
             console.log(res);
             document.cookie = `user_id=${res.ID}`;
             document.cookie = `access_token=${res.TOKEN}`;
-            document.cookie = `is_admin=${(res.IS_ADMIN === '1')}`;
+            document.cookie = `is_admin=${res.IS_ADMIN === "1" ? 1 : 0}`;
             setIsAuth(true)
         }
     }, [login, password]);
@@ -36,7 +37,7 @@ const Login = () => {
     return (
         <Container fluid style={{padding:'0px'}}>
             {
-                isAuth ?  <Redirect to={`/profile/${getCookieByName('user_id')}/3/`}/> : ''
+                isAuth ?  <Redirect to={`/profile/${getCookieByName('user_id')}/3/${getCookieByName('user_id')}`}/> : ''
             }
             <Form className={'main__register-form'} style={{marginTop: 125}}>
                 <Col md={6} xl={2} style={{margin: 'auto'}}>

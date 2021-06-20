@@ -19,14 +19,14 @@ const MainProfileContainer = ({currentTab}: mainProfileContainerInterface) => {
         switch (Number(currentTab)) {
             case menuTabs.NEWS:
                 return <NewsList />;
-            case menuTabs.EVENTS:
+            case menuTabs.EVENTS:   
                 return <EventsPage />;
             case menuTabs.ALL_USERS:
                 return <AllUsers />;
             case menuTabs.EDIT:
                 return <EditProfile />;
             case menuTabs.PROFILE:
-                return  <MainProfile currentTab={currentTab}/>
+                return  <MainProfile />
             default:
                 return <NewsList />
         }

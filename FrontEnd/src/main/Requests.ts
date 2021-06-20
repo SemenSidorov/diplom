@@ -1,3 +1,4 @@
+import { getCookieByName } from "./Auth/Login";
 import {NewsListI} from "./News/NewsList";
 
 const requestContainer = (req) => {
@@ -44,7 +45,20 @@ export const addNew = (formData: FormData) => {
     ))
 }
 
+export const editProfile = (formData: FormData) => {
+    return requestContainer(fetch('http://backend/BackEnd/personal/set_user_fields.php', {
+            body: formData,
+            method: "post",
+        }
+    ))
+}
+
 //Все пользователи
 export const getAllUsers = (userId: string, token: any): Promise<NewsListI> => {
-    return fetch(`http://backend/BackEnd/admin/get_all_users.php?TOKEN=${token}&USER_ID=${userId}`).then(res => res.json());
+    return requestContainer(fetch(`http://backend/BackEnd/admin/get_all_users.php?TOKEN=${token}&USER_ID=${userId}`));
+};
+
+export const getUserFields = (userId, otherUserId): Promise<any> => {
+    const token = getCookieByName('access_token');
+    return requestContainer(fetch(`http://backend/BackEnd/personal/get_user_fields.php?&TOKEN=${token}&USER_ID=${userId}&ID=${otherUserId}`));
 };

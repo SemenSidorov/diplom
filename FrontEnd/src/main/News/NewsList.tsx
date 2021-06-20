@@ -17,6 +17,8 @@ export interface NewI {
     PREVIEW_TEXT: string
     userId: string
     token?: string
+    LAST_NAME?: string
+    LAST_AUTH?: boolean
 }
 
 export interface NewsListI {
@@ -29,7 +31,7 @@ export interface NewsListI {
 const NewsList = () => {
     const { userId } : UserTypes = useParams();
     const token = getCookieByName('access_token');
-    const isAdmin = getCookieByName('is_admin');
+    const isAdmin = getCookieByName('is_admin') === "1";
 
     const { data, loading, run } = useAsync<NewsListI>(() => getNews(userId, token) , []);
     const [showModal, setShowModal] = useState(false);

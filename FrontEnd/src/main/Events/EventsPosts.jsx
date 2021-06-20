@@ -33,6 +33,7 @@ const EventsPosts = ({isMyEvents = false}) => {
     const handleClose = () => {
         setFields(addEventInitialModel)
         setShow(false)
+        setShowModal(false)
     };
     const handleShow = () => setShow(true);
 
@@ -51,7 +52,7 @@ const EventsPosts = ({isMyEvents = false}) => {
     ), [activeDateTab, currentDateInterval]);
 
     const { userId } = useParams();
-    const isAdmin = getCookieByName('is_admin');
+    const isAdmin = getCookieByName('is_admin') === "1";
     const [showModal, setShowModal] = useState(false);
 
     const { data, loading, run } = useAsync(() => getEvents(isMyEvents,
@@ -70,12 +71,13 @@ const EventsPosts = ({isMyEvents = false}) => {
         const formData = new FormData(form);
         await addEvent(formData);
         await run();
-        setShowModal(false)
+        handleClose()
     }, []);
     return (
         <div style={{
             background: '#fff',
             borderRadius: 30,
+            padding: 15,
             textAlign: 'center',
             display: 'flex',
             flexDirection: "column",
@@ -105,7 +107,7 @@ const EventsPosts = ({isMyEvents = false}) => {
                 cursor: 'pointer',
                 height: 134,
                 borderRadius: 35,
-                backgroundImage: `url(${el?.PREVIEW_PICTURE?.replace('C:/OpenServer/domains/', 'http://')})`,
+                backgroundImage: `url(${el?.PREVIEW_PICTURE?.replace('W:/domains/', 'http://')})`,
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 marginTop: '10px'
@@ -133,7 +135,7 @@ const EventsPosts = ({isMyEvents = false}) => {
                 />
             }
             {show &&  <DetailEventsModal userId={userId}
-                                         image={currentModalData.PREVIEW_PICTURE.replace('C:/OpenServer/domains/', 'http://')}
+                                         image={currentModalData?.PREVIEW_PICTURE.replace('W:/domains/', 'http://')}
                                          eventId={currentModalData?.ID}
                                          text={currentModalData?.DETAIL_TEXT}
                                          token={token}

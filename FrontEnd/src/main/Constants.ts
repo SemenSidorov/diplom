@@ -7,6 +7,7 @@ export interface HeaderTypes {
 
 export interface UserTypes {
     userId: string
+    otherUserId?: string
 }
 
 export interface TabsTypes {

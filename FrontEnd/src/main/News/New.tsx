@@ -23,7 +23,7 @@ const New = ({NAME, ID,userId, token, PREVIEW_TEXT, PREVIEW_PICTURE}: NewI) => {
             <div style={{display: "flex",justifyContent: 'center',width: "100%"}}>
                 <img
                     className="d-block w-100"
-                    src={PREVIEW_PICTURE.replace('C:/OpenServer/domains/', 'http://')} //todo src на картинки
+                    src={PREVIEW_PICTURE.replace('W:/domains/', 'http://')} //todo src на картинки
                     alt="First slide"
                 />
             </div>
@@ -33,7 +33,7 @@ const New = ({NAME, ID,userId, token, PREVIEW_TEXT, PREVIEW_PICTURE}: NewI) => {
                                         id={ID}
                                         userId={userId}
                                         token={token}
-                                        previewPicture={PREVIEW_PICTURE.replace('C:/OpenServer/domains/', 'http://')}
+                                        previewPicture={PREVIEW_PICTURE.replace('W:/domains/', 'http://')}
                                         show={show}
                                         handleClose={handleClose}
                 />

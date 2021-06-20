@@ -26,7 +26,7 @@ const DetailNewModal = ({show, handleClose,userId, token, header,text, id, previ
                                         data?.ADD_PICTURES?.map(el => <Carousel.Item key={el?.VALUE}>
                                                 <img
                                                     className="d-block w-100"
-                                                    src={el?.VALUE?.replace('C:/OpenServer/domains/', 'http://')}
+                                                    src={el?.VALUE?.replace('W:/domains/', 'http://')}
                                                     alt="First slide"
                                                 />
                                             </Carousel.Item>
