@@ -2,15 +2,17 @@
 $db = new DB;
 $filter = ["IBLOCK_ID" => 2];
 
-$token = $_GET["TOKEN"];
-$id = $_GET["USER_ID"];
-$check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token], ["ID", "IS_ADMIN", "LAST_AUTH"]);
+if($_GET["TOKEN"] && $_GET["USER_ID"]){    
+    $token = $_GET["TOKEN"];
+    $id = $_GET["USER_ID"];
+    $check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token], ["ID", "IS_ADMIN", "LAST_AUTH"]);
 
-if($check_user){
-    if($check_user[0]["LAST_AUTH"] + 600 < time()) die(json_encode(["ERROR" => "Пользователь не авторизован"]));
-    $db->Update('users', $check_user[0]["ID"], ["LAST_AUTH" => time()]);
-}else{
-    die(json_encode(["ERROR" => "Пользователя с таким токеном не существует"]));
+    if($check_user){
+        if($check_user[0]["LAST_AUTH"] + 600 < time()) die(json_encode(["ERROR" => "Пользователь не авторизован"]));
+        $db->Update('users', $check_user[0]["ID"], ["LAST_AUTH" => time()]);
+    }else{
+        die(json_encode(["ERROR" => "Пользователя с таким токеном не существует"]));
+    }
 }
 
 if($_GET["DATE_START"] && $_GET["DATE_EXP"]){
