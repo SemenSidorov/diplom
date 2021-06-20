@@ -4,9 +4,10 @@ import Footer from "../../Footer/Footer";
 import {menuTabs} from "../../Constants";
 import NewsList from "../../News/NewsList";
 import EventsPage from "../../Events/EventsPage";
-import {Col, Container} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import NavPanel from "../../Navigation";
 import AllUsers from "../../AllUsers";
+import EditProfile from "../EditProfile";
 
 export interface mainProfileContainerInterface {
     currentTab: number
@@ -21,9 +22,9 @@ const MainProfileContainer = ({currentTab}: mainProfileContainerInterface) => {
             case menuTabs.EVENTS:
                 return <EventsPage />;
             case menuTabs.ALL_USERS:
-                return <AllUsers />
+                return <AllUsers />;
             case menuTabs.EDIT:
-                return <Col md={9}>Редактирование страницы</Col>
+                return <EditProfile />;
             case menuTabs.PROFILE:
                 return  <MainProfile currentTab={currentTab}/>
             default:

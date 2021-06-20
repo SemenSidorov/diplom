@@ -74,6 +74,7 @@ const EventsPosts = ({isMyEvents = false}) => {
     }, []);
     return (
         <div style={{
+            background: '#fff',
             borderRadius: 30,
             textAlign: 'center',
             display: 'flex',
@@ -104,7 +105,7 @@ const EventsPosts = ({isMyEvents = false}) => {
                 cursor: 'pointer',
                 height: 134,
                 borderRadius: 35,
-                backgroundImage: `url(${el.PREVIEW_PICTURE.replace('C:/OpenServer/domains/', 'http://')})`,
+                backgroundImage: `url(${el?.PREVIEW_PICTURE?.replace('C:/OpenServer/domains/', 'http://')})`,
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 marginTop: '10px'

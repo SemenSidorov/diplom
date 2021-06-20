@@ -8,7 +8,7 @@ const New = ({NAME, ID,userId, token, PREVIEW_TEXT, PREVIEW_PICTURE}: NewI) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     return (
-        <div style={{backgroundColor: "#FFF",width: '100%',marginTop: 20}}>
+        <div style={{backgroundColor: "#FFF",width: '100%',marginTop: 20, borderRadius: 20, padding: '0px 10px 30px 10px'}}>
             <div>
                 <div style={{display: 'flex', textAlign: "left", padding: 10, alignItems: 'center'}}>
                     {NAME}
