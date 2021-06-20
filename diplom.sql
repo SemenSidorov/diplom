@@ -1,34 +1,18 @@
--- phpMyAdmin SQL Dump
--- version 5.0.2
--- https://www.phpmyadmin.net/
---
--- Хост: 127.0.0.1:3306
--- Время создания: Май 11 2021 г., 21:03
--- Версия сервера: 10.3.22-MariaDB
--- Версия PHP: 7.1.33
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- База данных: `diplom`
---
+CREATE DATABASE IF NOT EXISTS `diplom` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `diplom`;
 
--- --------------------------------------------------------
-
---
--- Структура таблицы `elements`
---
-
-CREATE TABLE `elements` (
-  `ID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `elements`;
+CREATE TABLE IF NOT EXISTS `elements` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `IBLOCK_ID` int(11) NOT NULL,
   `NAME` varchar(100) NOT NULL,
   `SECTION_ID` int(11) DEFAULT NULL,
@@ -36,17 +20,14 @@ CREATE TABLE `elements` (
   `PREVIEW_TEXT` text DEFAULT NULL,
   `DETAIL_TEXT` text DEFAULT NULL,
   `DATE_START` int(11) NOT NULL,
-  `DATE_EXP` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `elements`
---
+  `DATE_EXP` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 INSERT INTO `elements` (`ID`, `IBLOCK_ID`, `NAME`, `SECTION_ID`, `PREVIEW_PICTURE`, `PREVIEW_TEXT`, `DETAIL_TEXT`, `DATE_START`, `DATE_EXP`) VALUES
-(1, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
-(2, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0),
-(3, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
+(1, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 1, 0),
+(2, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 2, 0),
+(3, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 3, 0),
 (4, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0),
 (5, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
 (6, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0),
@@ -59,66 +40,43 @@ INSERT INTO `elements` (`ID`, `IBLOCK_ID`, `NAME`, `SECTION_ID`, `PREVIEW_PICTUR
 (13, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
 (14, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0),
 (15, 1, 'lol', NULL, ';sdlkjf;dfsl', 'j;ldhf;ajsfk;dlk', 'kjhalfkjghsfdlkjghsd', 0, 0),
-(16, 1, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 0, 0);
+(16, 2, 'kek', NULL, 'kjsdhfglskjfgh', 'sjkdjfhlkgjshdflg', 'fgpoieurpfkv', 10, 20);
 
--- --------------------------------------------------------
-
---
--- Структура таблицы `ibocks`
---
-
-CREATE TABLE `ibocks` (
-  `ID` int(11) NOT NULL,
-  `NAME` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `ibocks`
---
+DROP TABLE IF EXISTS `ibocks`;
+CREATE TABLE IF NOT EXISTS `ibocks` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(100) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 INSERT INTO `ibocks` (`ID`, `NAME`) VALUES
 (1, 'news'),
 (2, 'events');
 
--- --------------------------------------------------------
-
---
--- Структура таблицы `properties`
---
-
-CREATE TABLE `properties` (
-  `ID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `properties`;
+CREATE TABLE IF NOT EXISTS `properties` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `PARENT_ID` int(11) NOT NULL,
-  `VALUE` varchar(20000) NOT NULL
+  `VALUE` varchar(20000) NOT NULL,
+  `NAME` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Структура таблицы `sections`
---
-
-CREATE TABLE `sections` (
-  `ID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `sections`;
+CREATE TABLE IF NOT EXISTS `sections` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `IBLOCK_ID` int(11) NOT NULL,
-  `NAME` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `test`
---
-
-CREATE TABLE `test` (
-  `ID` int(11) NOT NULL,
   `NAME` varchar(100) NOT NULL,
-  `VALUE` varchar(100) NOT NULL
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Дамп данных таблицы `test`
---
+DROP TABLE IF EXISTS `test`;
+CREATE TABLE IF NOT EXISTS `test` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(100) NOT NULL,
+  `VALUE` varchar(100) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 INSERT INTO `test` (`ID`, `NAME`, `VALUE`) VALUES
 (4, 'BOBA', 'fdgsdfgadfgksdfjgkjcvkxzcnvm,ajsldfj'),
@@ -129,17 +87,12 @@ INSERT INTO `test` (`ID`, `NAME`, `VALUE`) VALUES
 (13, 'afsdasdfaasdf', 'asdfasdfasdf'),
 (14, 'asdfasdfasdf', 'asdfasdfasdf');
 
--- --------------------------------------------------------
-
---
--- Структура таблицы `users`
---
-
-CREATE TABLE `users` (
-  `ID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `LOGIN` varchar(30) NOT NULL,
   `PASSWORD` varchar(255) NOT NULL,
-  `TOKEN` varchar(11) DEFAULT NULL,
+  `TOKEN` varchar(255) DEFAULT NULL,
   `LAST_AUTH` int(11) NOT NULL,
   `IS_ADMIN` tinyint(1) DEFAULT NULL,
   `NAME` varchar(30) DEFAULT NULL,
@@ -148,119 +101,21 @@ CREATE TABLE `users` (
   `GROUP_NUMBER` int(10) DEFAULT NULL,
   `CREDIT_BOOK_NUMBER` int(10) DEFAULT NULL,
   `PHONE_NUMBER` varchar(13) DEFAULT NULL,
-  `EMAIL` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `EMAIL` varchar(100) DEFAULT NULL,
+  `PREVIEW_PICTURE` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
---
--- Дамп данных таблицы `users`
---
+INSERT INTO `users` (`ID`, `LOGIN`, `PASSWORD`, `TOKEN`, `LAST_AUTH`, `IS_ADMIN`, `NAME`, `LAST_NAME`, `MIDDLE_NAME`, `GROUP_NUMBER`, `CREDIT_BOOK_NUMBER`, `PHONE_NUMBER`, `EMAIL`, `PREVIEW_PICTURE`) VALUES
+(1, 'biba', '$2y$10$0EGkfJ/f/Jshz7EbnvrR/OAbeRYQRd2NN8cQa05ELlLMIavZlrFkm', NULL, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
 
-INSERT INTO `users` (`ID`, `LOGIN`, `PASSWORD`, `TOKEN`, `LAST_AUTH`, `IS_ADMIN`, `NAME`, `LAST_NAME`, `MIDDLE_NAME`, `GROUP_NUMBER`, `CREDIT_BOOK_NUMBER`, `PHONE_NUMBER`, `EMAIL`) VALUES
-(1, 'biba', '$2y$10$0EGkfJ/f/Jshz7EbnvrR/OAbeRYQRd2NN8cQa05ELlLMIavZlrFkm', NULL, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `users_events`
---
-
-CREATE TABLE `users_events` (
-  `ID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `users_events`;
+CREATE TABLE IF NOT EXISTS `users_events` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `USER_ID` int(11) NOT NULL,
-  `EVENT_ID` int(11) NOT NULL
+  `EVENT_ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Индексы сохранённых таблиц
---
-
---
--- Индексы таблицы `elements`
---
-ALTER TABLE `elements`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Индексы таблицы `ibocks`
---
-ALTER TABLE `ibocks`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Индексы таблицы `properties`
---
-ALTER TABLE `properties`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Индексы таблицы `sections`
---
-ALTER TABLE `sections`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Индексы таблицы `test`
---
-ALTER TABLE `test`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Индексы таблицы `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Индексы таблицы `users_events`
---
-ALTER TABLE `users_events`
-  ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT для сохранённых таблиц
---
-
---
--- AUTO_INCREMENT для таблицы `elements`
---
-ALTER TABLE `elements`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT для таблицы `ibocks`
---
-ALTER TABLE `ibocks`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT для таблицы `properties`
---
-ALTER TABLE `properties`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `sections`
---
-ALTER TABLE `sections`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `test`
---
-ALTER TABLE `test`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT для таблицы `users`
---
-ALTER TABLE `users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT для таблицы `users_events`
---
-ALTER TABLE `users_events`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
