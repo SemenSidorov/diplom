@@ -1,8 +1,8 @@
 <?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 $db = new DB;
 
-$token = $_GET["TOKEN"];
-$id = $_GET["USER_ID"];
+$token = $_POST["TOKEN"];
+$id = $_POST["USER_ID"];
 $check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token]);
 
 if($check_user){
@@ -26,13 +26,13 @@ if($check_user){
             }
         }
         $arFileds = ["LAST_AUTH" => time()];
-        if($_GET["NAME"]) $arFileds["NAME"] = $_GET["NAME"];
-        if($_GET["LAST_NAME"]) $arFileds["LAST_NAME"] = $_GET["LAST_NAME"];
-        if($_GET["MIDDLE_NAME"]) $arFileds["MIDDLE_NAME"] = $_GET["MIDDLE_NAME"];
-        if($_GET["GROUP_NUMBER"]) $arFileds["GROUP_NUMBER"] = $_GET["GROUP_NUMBER"];
-        if($_GET["CREDIT_BOOK_NUMBER"]) $arFileds["CREDIT_BOOK_NUMBER"] = $_GET["CREDIT_BOOK_NUMBER"];
-        if($_GET["PHONE_NUMBER"]) $arFileds["PHONE_NUMBER"] = $_GET["PHONE_NUMBER"];
-        if($_GET["EMAIL"]) $arFileds["EMAIL"] = $_GET["EMAIL"];
+        if($_POST["NAME"]) $arFileds["NAME"] = $_POST["NAME"];
+        if($_POST["LAST_NAME"]) $arFileds["LAST_NAME"] = $_POST["LAST_NAME"];
+        if($_POST["MIDDLE_NAME"]) $arFileds["MIDDLE_NAME"] = $_POST["MIDDLE_NAME"];
+        if($_POST["GROUP_NUMBER"]) $arFileds["GROUP_NUMBER"] = $_POST["GROUP_NUMBER"];
+        if($_POST["CREDIT_BOOK_NUMBER"]) $arFileds["CREDIT_BOOK_NUMBER"] = $_POST["CREDIT_BOOK_NUMBER"];
+        if($_POST["PHONE_NUMBER"]) $arFileds["PHONE_NUMBER"] = $_POST["PHONE_NUMBER"];
+        if($_POST["EMAIL"]) $arFileds["EMAIL"] = $_POST["EMAIL"];
         if($targetPath) $arFileds["PREVIEW_PICTURE"] = $targetPath;
         $res = $db->Update('users', $id, [$arFileds]);
         if($res == $id) echo "success" else echo json_encode("ERROR" => $res);

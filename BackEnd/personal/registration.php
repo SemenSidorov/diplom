@@ -1,13 +1,13 @@
 <?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 $db = new DB;
 
-$login = $_GET["LOGIN"];
+$login = $_POST["LOGIN"];
 $check_user = $db->GetList('users', ["LOGIN" => $login], ["ID"]);
 if($check_user){
     echo json_encode(["ERROR" => "Пользователь с таким логином уже существует"]);
     die;
 }
-if(!$password = password_hash($_GET["PASSWORD"], PASSWORD_DEFAULT)){
+if(!$password = password_hash($_POST["PASSWORD"], PASSWORD_DEFAULT)){
     echo json_encode(["ERROR" => "Ошибка хеширования пароля"]);
     die;
 }
@@ -39,12 +39,12 @@ $arFileds = ["LOGIN" => $login,
             "LAST_AUTH" => time(), 
             "TOKEN" => $token
             ];
-if($_GET["NAME"]) $arFileds["NAME"] = $_GET["NAME"];
-if($_GET["LAST_NAME"]) $arFileds["LAST_NAME"] = $_GET["LAST_NAME"];
-if($_GET["GROUP_NUMBER"]) $arFileds["GROUP_NUMBER"] = $_GET["GROUP_NUMBER"];
-if($_GET["CREDIT_BOOK_NUMBER"]) $arFileds["CREDIT_BOOK_NUMBER"] = $_GET["CREDIT_BOOK_NUMBER"];
-if($_GET["PHONE_NUMBER"]) $arFileds["PHONE_NUMBER"] = $_GET["PHONE_NUMBER"];
-if($_GET["EMAIL"]) $arFileds["EMAIL"] = $_GET["EMAIL"];
+if($_POST["NAME"]) $arFileds["NAME"] = $_POST["NAME"];
+if($_POST["LAST_NAME"]) $arFileds["LAST_NAME"] = $_POST["LAST_NAME"];
+if($_POST["GROUP_NUMBER"]) $arFileds["GROUP_NUMBER"] = $_POST["GROUP_NUMBER"];
+if($_POST["CREDIT_BOOK_NUMBER"]) $arFileds["CREDIT_BOOK_NUMBER"] = $_POST["CREDIT_BOOK_NUMBER"];
+if($_POST["PHONE_NUMBER"]) $arFileds["PHONE_NUMBER"] = $_POST["PHONE_NUMBER"];
+if($_POST["EMAIL"]) $arFileds["EMAIL"] = $_POST["EMAIL"];
 if($targetPath) $arFileds["PREVIEW_PICTURE"] = $targetPath;
 $result = $db->Add('users', );
 if((int)$result){
