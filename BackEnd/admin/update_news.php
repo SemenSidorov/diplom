@@ -1,5 +1,12 @@
-<?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
+<?
+ini_set('display_errors', 0);
+require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 $db = new DB;
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+header('Content-Type: application/json');
 
 $errors = [];
 $token = $_POST["TOKEN"];

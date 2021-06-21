@@ -1,6 +1,11 @@
 <?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 $db = new DB;
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+header('Content-Type: application/json');
+
 $token = $_GET["TOKEN"];
 $id = $_GET["USER_ID"];
 $check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token], ["ID", "IS_ADMIN", "LAST_AUTH"]);
@@ -19,5 +24,5 @@ if($check_sub){
     echo json_encode(["ERROR" => "Пользователь уже подписан на данное мероприятие", "USER" => $check_user[0]]);
 }else{
     $db->Add('users_events', ["USER_ID" => $id, "EVENT_ID" => $event_id]);
-    echo "success";
+    echo json_encode(["success"]);
 }

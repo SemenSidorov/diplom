@@ -1,5 +1,12 @@
-<?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
+<?
+ini_set('display_errors', 0);
+require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 $db = new DB;
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+header('Content-Type: application/json');
 
 $login = $_POST["LOGIN"];
 $check_user = $db->GetList('users', ["LOGIN" => $login], ["ID"]);
@@ -12,10 +19,10 @@ if(!$password = password_hash($_POST["PASSWORD"], PASSWORD_DEFAULT)){
     die;
 }
 
-$str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQSTUVWXYZ1234567890~!@#$%^&*_-+=";
+$str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQSTUVWXYZ1234567890";
 $rand_num = rand(0, 63);
 $str = str_shuffle($str);
-$token = substr($str, $rand_num, $rand_num + 11);
+$token = substr($str, $rand_num, 11);
 
 if($_FILES['PREVIEW_PICTURE']){
     $sourcePath = $_FILES['PREVIEW_PICTURE']["tmp_name"];
@@ -46,7 +53,7 @@ if($_POST["CREDIT_BOOK_NUMBER"]) $arFileds["CREDIT_BOOK_NUMBER"] = $_POST["CREDI
 if($_POST["PHONE_NUMBER"]) $arFileds["PHONE_NUMBER"] = $_POST["PHONE_NUMBER"];
 if($_POST["EMAIL"]) $arFileds["EMAIL"] = $_POST["EMAIL"];
 if($targetPath) $arFileds["PREVIEW_PICTURE"] = $targetPath;
-$result = $db->Add('users', );
+$result = $db->Add('users', $arFileds);
 if((int)$result){
     echo json_encode(["LOGIN" => $login, "TOKEN" => $token, "PREVIEW_PICTURE" => $targetPath, "ID" => $result]);
 }else{

@@ -1,6 +1,13 @@
-<?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
+<?
+ini_set('display_errors', 0);
+require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 $db = new DB;
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+header('Content-Type: application/json');
+// die(json_encode($_POST));
 $token = $_POST["TOKEN"];
 $id = $_POST["USER_ID"];
 $check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token]);
@@ -34,8 +41,8 @@ if($check_user){
         if($_POST["PHONE_NUMBER"]) $arFileds["PHONE_NUMBER"] = $_POST["PHONE_NUMBER"];
         if($_POST["EMAIL"]) $arFileds["EMAIL"] = $_POST["EMAIL"];
         if($targetPath) $arFileds["PREVIEW_PICTURE"] = $targetPath;
-        $res = $db->Update('users', $id, [$arFileds]);
-        if($res == $id) echo "success" else echo json_encode("ERROR" => $res);
+        $res = $db->Update('users', $id, $arFileds);
+        if($res == $id) echo json_encode(["success"]); else echo json_encode(["ERROR" => $res]);
     }else{
         echo json_encode(["ERROR" => "Пользователь не авторизован"]);
     }

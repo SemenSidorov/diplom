@@ -12,22 +12,21 @@ $pagen = (int)$_GET["PAGEN"];
 
 $token = $_GET["TOKEN"];
 $id = $_GET["USER_ID"];
-$check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token], ["ID", "IS_ADMIN", "LAST_AUTH"]);
+$eId = $_GET["EVENT_ID"];
+$check_user = $db->GetList('users', ["ID" => $id, "TOKEN" => $token], ["ID"]);
 
 if($check_user){
-    if($check_user[0]["LAST_AUTH"] + 600 < time()) die(json_encode(["ERROR" => "Пользователь не авторизован"]));
-    if(!$check_user[0]["IS_ADMIN"]) die(json_encode(["ERROR" => "Не админ"]));
     $db->Update('users', $check_user[0]["ID"], ["LAST_AUTH" => time()]);
 }else{
     die(json_encode(["ERROR" => "Пользователя с таким токеном не существует"]));
 }
 
 if($pagen) $top_news = $count_news * ($pagen - 1);
-$result = $db->GetList('users_events', [], ['USER_ID']);
+$result = $db->GetList('users_events', ['EVENT_ID' => $eId], ['USER_ID']);
 $ids = [];
 foreach($result as $usr){
     $ids[] = $usr["USER_ID"];
 }
-$result = $db->GetList('users', ['ID' => $ids], ['ID', 'NAME'], [], $top_news, $count_news);
+$result = $db->GetList('users', ['ID' => $ids], ['ID', 'NAME', 'LAST_NAME', 'LAST_AUTH', 'PREVIEW_PICTURE'], [], $top_news, $count_news);
 $count = $db->Count('users_events');
-echo json_encode(["values" => $result, "count_news_all" => $count, "this_page" => ($pagen ? $pagen : 1)]);
+echo json_encode(["values" => $result, "count_users_all" => $count, "this_page" => ($pagen ? $pagen : 1)]);

@@ -1,4 +1,10 @@
-<?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
+<?
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+header('Content-Type: application/json');
+// ini_set('display_errors', 0);
+require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 $db = new DB;
 
 $token = $_POST["TOKEN"];
@@ -13,6 +19,11 @@ if($check_user){
 }else{
     die(json_encode(["ERROR" => "Пользователя с таким токеном не существует"]));
 }
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+header('Content-Type: application/json');
 
 $check_user = $db->GetList('users', ["ID" => $id]);
 if($check_user){
@@ -42,9 +53,10 @@ if($check_user){
     if($_POST["CREDIT_BOOK_NUMBER"]) $arFileds["CREDIT_BOOK_NUMBER"] = $_POST["CREDIT_BOOK_NUMBER"];
     if($_POST["PHONE_NUMBER"]) $arFileds["PHONE_NUMBER"] = $_POST["PHONE_NUMBER"];
     if($_POST["EMAIL"]) $arFileds["EMAIL"] = $_POST["EMAIL"];
+    if($_POST["IS_ADMIN"]) $arFileds["IS_ADMIN"] = 1; else $arFileds["IS_ADMIN"] = 0;
     if($targetPath) $arFileds["PREVIEW_PICTURE"] = $targetPath;
-    $res = $db->Update('users', $id, [$arFileds]);
-    if($res == $id) echo "success" else echo json_encode("ERROR" => $res);
+    $res = $db->Update('users', $id, $arFileds);
+    if($res == $id) echo json_encode(["success"]); else echo json_encode(["ERROR" => $res]);
 }else{
     echo json_encode(["ERROR" => "Пользователя с таким ID не существует"]);
 }

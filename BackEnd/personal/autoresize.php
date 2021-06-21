@@ -1,6 +1,11 @@
 <?require_once($_SERVER['DOCUMENT_ROOT'] . '/BackEnd/class/class.php');
 $db = new DB;
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+header('Content-Type: application/json');
+
 $login = $_GET["LOGIN"];
 $password = $_GET["PASSWORD"];
 $check_user = $db->GetList('users', ["LOGIN" => $login], ["ID", "LOGIN", "PASSWORD", "NAME", "LAST_NAME", "IS_ADMIN"]);
@@ -8,7 +13,7 @@ $check_user = $db->GetList('users', ["LOGIN" => $login], ["ID", "LOGIN", "PASSWO
 $str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQSTUVWXYZ1234567890";
 $rand_num = rand(0, 63);
 $str = str_shuffle($str);
-$token = substr($str, $rand_num, $rand_num + 11);
+$token = substr($str, $rand_num, 11);
 
 if($check_user){
     if($db->Update('users', $check_user[0]["ID"], ["TOKEN" => $token, "LAST_AUTH" => time()]) == $check_user[0]["ID"]){
