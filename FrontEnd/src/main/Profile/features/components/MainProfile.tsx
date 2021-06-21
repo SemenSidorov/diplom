@@ -52,18 +52,20 @@ const MainProfile = ({otherUserID} : {otherUserID?: string}) => {
                         }
                     </div>
                 </div>
-                    <Link to={`/profile/${userId}/4/${otherUserID || userId}`}>
-                    <div style={{
-                        backgroundColor: 'rgba(227, 227, 227, 0.8)',
-                        padding: 10, textAlign: 'center',
-                        borderRadius: '15px',
-                        marginTop: 20,
-                        fontSize: 15,
-                        fontWeight: 500
-                    }}>
-                        Редактировать страницу
-                    </div>
-                </Link>
+                   {
+                       ( !otherUserID || otherUserID && isAdmin) && <Link to={`/profile/${userId}/4/${otherUserID || userId}`}>
+                        <div style={{
+                            backgroundColor: 'rgba(227, 227, 227, 0.8)',
+                            padding: 10, textAlign: 'center',
+                            borderRadius: '15px',
+                            marginTop: 20,
+                            fontSize: 15,
+                            fontWeight: 500
+                        }}>
+                            Редактировать страницу
+                        </div>
+                        </Link>
+                   }
                 {
                     !otherUserID && 
                     <div>

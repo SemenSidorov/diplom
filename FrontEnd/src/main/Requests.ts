@@ -5,10 +5,10 @@ const requestContainer = (req) => {
     return req.then(async res => {
         const data = await res?.json();
         if (data?.ERROR) {
+            // window.location.href = 'http://localhost:3000/login'
             document.cookie = "access_token=; Max-Age=0";
             document.cookie = "user_id=; Max-Age=0";
             document.cookie = "is_admin=; Max-Age=0";
-            window.location.href = 'http://localhost:3000/login'
             return new Error('Токен упал')
         }
         return data
@@ -45,8 +45,8 @@ export const addNew = (formData: FormData) => {
     ))
 }
 
-export const editProfile = (formData: FormData) => {
-    return requestContainer(fetch('http://backend/BackEnd/personal/set_user_fields.php', {
+export const editProfile = (formData: FormData, isAdmin) => {
+    return requestContainer(fetch(`http://backend/BackEnd/${isAdmin ? 'admin' : 'personal'}/set_user_fields.php`, {
             body: formData,
             method: "post",
         }
@@ -56,6 +56,10 @@ export const editProfile = (formData: FormData) => {
 //Все пользователи
 export const getAllUsers = (userId: string, token: any): Promise<NewsListI> => {
     return requestContainer(fetch(`http://backend/BackEnd/admin/get_all_users.php?TOKEN=${token}&USER_ID=${userId}`));
+};
+
+export const getAllUsersForEvents = (userId: string, token: any, eventId: string): Promise<NewsListI> => {
+    return requestContainer(fetch(`http://backend/BackEnd/personal/users_to_event.php?TOKEN=${token}&USER_ID=${userId}&EVENT_ID=${eventId}`));
 };
 
 export const getUserFields = (userId, otherUserId): Promise<any> => {

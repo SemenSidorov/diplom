@@ -6,6 +6,7 @@ import { getCookieByName } from '../Auth/Login';
 import { useParams } from "react-router-dom";
 import { UserTypes } from '../Constants';
 import { editProfile, getUserFields } from '../Requests';
+import { debug } from 'console';
 
 const EditProfile = () => {
     const [profileFields, setProfileFields] = useState({
@@ -16,9 +17,11 @@ const EditProfile = () => {
         creditBookNumber: '',
         phoneNumber: '',
         email: '',
-        avatar: ''
+        avatar: '',
+        isAdmin: false
     });
     const userId = getCookieByName('user_id');
+    const isAdmin = getCookieByName('is_admin') === "1";
     const token = getCookieByName('access_token');
     const { otherUserId } : UserTypes = useParams();
 
@@ -34,7 +37,8 @@ const EditProfile = () => {
                 creditBookNumber: data?.CREDIT_BOOK_NUMBER,
                 email: data?.EMAIL,
                 phoneNumber: data?.PHONE_NUMBER,
-                avatar: data?.PREVIEW_PICTURE?.replace('W:/domains/', 'http://')
+                avatar: data?.PREVIEW_PICTURE?.replace('W:/domains/', 'http://'),
+                isAdmin: data?.IS_ADMIN
             })
         }
     }, [data])
@@ -43,7 +47,7 @@ const EditProfile = () => {
         event.preventDefault();
         const form = event.currentTarget;
         const formData = new FormData(form);
-        const result = editProfile(formData)
+        const result = editProfile(formData, userId === otherUserId ? false : true)
         alert('Успешно')
     }
 
@@ -128,15 +132,26 @@ const EditProfile = () => {
                             custom
                         />
                         </Col>
-                        
+                        {
+                            userId !== otherUserId && <Col md={6} xl={8} style={{margin: '20px auto'}}>
+                            <Form.Group className={'input-text'} style={{margin: 0}} controlId="title">
+                                <Form.Check
+                                    type="checkbox"
+                                    label={'Является администратором'}
+                                    name={'IS_ADMIN'}
+                                    checked={profileFields?.isAdmin}
+                                    onChange={() => setProfileFields({...profileFields, isAdmin: !profileFields.isAdmin})}
+                                />
+                            </Form.Group>
+                        </Col>
+                        }
                         <Form.Group className={'input-text'} style={{margin: 0}} controlId="title">
                             <Form.Control name='TOKEN' value={token} type='hidden' />
-                            <Form.Control name='USER_ID' value={userId} type='hidden' />
+                            <Form.Control name='USER_ID' value={otherUserId} type='hidden' />
+                            {otherUserId && <Form.Control name='ADMIN_ID' value={userId} type='hidden' />}
                         </Form.Group>
                         <Col md={6} xs ={8} style={{display:'flex',margin:'auto',justifyContent: 'center'}}>
-                            <Button variant="success" onClick={() => {
-                                console.log('lol')
-                            }} type='submit' className={'submit-btn'}>
+                            <Button variant="success" type='submit' className={'submit-btn'}>
                                 Сохранить
                             </Button>
                         </Col>

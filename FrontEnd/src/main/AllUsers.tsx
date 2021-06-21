@@ -4,27 +4,31 @@ import {UserTypes} from "./Constants";
 import {useParams} from "react-router-dom";
 import {getCookieByName} from "./Auth/Login";
 import {useAsync} from "@umijs/hooks";
-import {getAllUsers} from "./Requests";
+import {getAllUsers, getAllUsersForEvents} from "./Requests";
 import {NewsListI} from "./News/NewsList";
 import moment from 'moment'
-import ModalContainer from './ModalContainer';
 import User from './User';
 import { useMemo } from 'react';
 
-const AllUsers = () => {
+const AllUsers = ({forEvents = false, eventId} : {
+    forEvents?: boolean
+    eventId?: string
+}) => {
     const { userId } : UserTypes = useParams();
     const token = getCookieByName('access_token');
     const [userInfo, setUserInfo] = useState<any>(0)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false)
 
-    const { data, loading, run } = useAsync<NewsListI>(() => getAllUsers(userId, token) , []);
+    const { data, loading, run } = useAsync<NewsListI>(() => forEvents && eventId ? getAllUsersForEvents(userId, token, eventId) :  getAllUsers(userId, token) , []);
     const userModal = useMemo(() => show && <User otherUserID={userInfo} show={show} handleClose={handleClose} />, [show] )
     return (
         <Container style={{display: 'flex', justifyContent: 'center', padding: 0}}>
             <div style={{height: "100%", width: "100%",  overflow: "auto"}}>
                 <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
-                    <Col xs={12} style={{textAlign: 'center', height: 100, padding: 15}}>Список Пользователей</Col>
+                    {
+                        data?.values?.length && <Col xs={12} style={{textAlign: 'center', height: 100, padding: 15}}>Список Пользователей</Col>
+                    } 
                     {
                         data?.values?.map(el =>  <div>
                             <Col xs={12} onClick={() => {
