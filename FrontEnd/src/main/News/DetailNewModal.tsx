@@ -4,7 +4,7 @@ import {useAsync} from "@umijs/hooks";
 import {NewsListI} from "./NewsList";
 import {ClockLoader} from "react-spinners";
 
-const getNew = (userId: string, token: any, id: string): Promise<NewsListI> => {
+export const getNew = (userId: string, token: any, id: string): Promise<NewsListI> => {
     return fetch(`http://backend/BackEnd/news/detail.php?ID=${id}&TOKEN=${token}&PAGEN=1&USER_ID=${userId}`).then(res => res.json());
 };
 

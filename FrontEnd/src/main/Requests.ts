@@ -66,3 +66,13 @@ export const getUserFields = (userId, otherUserId): Promise<any> => {
     const token = getCookieByName('access_token');
     return requestContainer(fetch(`http://backend/BackEnd/personal/get_user_fields.php?&TOKEN=${token}&USER_ID=${userId}&ID=${otherUserId}`));
 };
+
+export const updateNews = (formData: FormData) => {
+    return requestContainer(fetch('http://backend/BackEnd/admin/update_news.php', {
+            body: formData,
+            method: "post",
+        }
+    ))
+}
+
+

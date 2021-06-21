@@ -12,6 +12,7 @@ import {addNew, getNews} from "../Requests";
 
 export interface NewI {
     ID: string
+    run?: any
     NAME: string
     PREVIEW_PICTURE: string
     PREVIEW_TEXT: string
@@ -56,6 +57,7 @@ const NewsList = () => {
     }, []);
 
 
+
     return (
         <div style={{backgroundColor: '#ebedf0', height: "100%", width: "100%",  overflow: "auto"}}>
             <Container style={{display: 'flex', padding: 0, justifyContent: 'center', paddingBottom: 80}}>
@@ -81,6 +83,7 @@ const NewsList = () => {
                     }
                     {
                     !loading && data?.values?.map((el) => <New
+                                                              run={run}
                                                               NAME={el.NAME}
                                                               ID={el.ID}
                                                               userId={userId}

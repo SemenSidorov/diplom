@@ -3,7 +3,7 @@ import {Button, Col, Form, Modal} from "react-bootstrap";
 import ModalContainer from "./ModalContainer";
 import moment from "moment";
 
-const AddNewOrEvent = ({onFieldsChange, userId,fields, header, show, handleClose, token, onSubmit }) => {
+const AddNewOrEvent = ({onFieldsChange, userId,fields, header, show, handleClose, token, onSubmit, newsId } : any) => {
 
     return (
             <ModalContainer header={header} show={show} handleClose={handleClose}>
@@ -56,6 +56,7 @@ const AddNewOrEvent = ({onFieldsChange, userId,fields, header, show, handleClose
                     <Form.Group className={'input-text'} style={{margin: 0}} controlId="title">
                         <Form.Control name='TOKEN' value={token} type='hidden' />
                         <Form.Control name='USER_ID' value={userId} type='hidden' />
+                        { newsId &&<Form.Control name='NEWS_ID' value={newsId} type='hidden' /> }
                     </Form.Group>
 
                     <Modal.Footer>
